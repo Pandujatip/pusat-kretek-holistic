@@ -17,6 +17,70 @@
 </head>
 <body>
 
+  <!-- ============================================== -->
+  <!-- FULLSCREEN INTERACTIVE ZIPPER INTRO SCREEN     -->
+  <!-- ============================================== -->
+  <aside id="zipperOverlay" class="zipper-overlay" aria-label="Tirai Interaktif Resleting">
+    <!-- Left dark fabric flap -->
+    <div class="zipper-flap flap-left" id="flapLeft">
+      <div class="flap-texture"></div>
+      <div class="flap-brand-badge">
+        <span class="badge-title">Pusat Kretek</span>
+        <span class="badge-sub">HOLISTIC</span>
+      </div>
+    </div>
+
+    <!-- Right dark fabric flap -->
+    <div class="zipper-flap flap-right" id="flapRight">
+      <div class="flap-texture"></div>
+      <div class="flap-brand-tagline">
+        <span>🌿 Terapi Alami & Reposisi Tulang</span>
+      </div>
+    </div>
+
+    <!-- Central SVG for interlocked teeth & V-slit teeth -->
+    <svg id="zipperTeethSvg" class="zipper-teeth-svg" xmlns="http://www.w3.org/2000/svg"></svg>
+
+    <!-- Invisible track click target -->
+    <div class="zipper-track-line" id="zipperTrack" title="Klik atau tarik untuk membuka"></div>
+
+    <!-- Interactive Zipper Slider & Pull Handle -->
+    <div id="zipperSlider" class="zipper-slider" role="slider" aria-label="Tarik ke bawah untuk membuka website" tabindex="0">
+      <div class="zipper-runner">
+        <div class="runner-body">
+          <div class="runner-emboss">PKH</div>
+        </div>
+      </div>
+      <div class="zipper-puller">
+        <div class="puller-loop"></div>
+        <div class="puller-tab">
+          <div class="puller-hole"></div>
+          <div class="puller-grip-lines">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <div class="puller-brand">ANDI</div>
+        </div>
+      </div>
+
+      <!-- Instruction / Hint under handle -->
+      <div class="zipper-hint" id="zipperHint">
+        <div class="hint-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="7 10 12 15 17 10"></polyline>
+          </svg>
+        </div>
+        <span>Tarik ke bawah</span>
+      </div>
+    </div>
+
+    <!-- Quick Skip Button (Top Right) -->
+    <button type="button" id="btnSkipZipper" class="btn-skip-zipper" aria-label="Lewati Animasi">
+      <span>Buka Langsung</span> &rarr;
+    </button>
+  </aside>
+
   <!-- Top Announcement Bar -->
   <aside class="top-bar" aria-label="Informasi Jam Praktik">
     <div class="container top-bar-content">
@@ -663,6 +727,9 @@
     <div class="footer-bottom">
       <div class="container footer-bottom-flex">
         <p>&copy; 2026 Pusat Kretek Holistic (Pak Andi). Seluruh Hak Cipta Dilindungi.</p>
+        <button type="button" id="btnReplayZipper" class="footer-replay-btn" aria-label="Mainkan Ulang Animasi Resleting">
+          <span>🎬 Buka/Tutup Tirai Resleting</span>
+        </button>
         <p>Website Resmi Praktisi Terapi Holistik</p>
       </div>
     </div>
@@ -803,6 +870,7 @@
     </div>
   </dialog>
 
+  <script src="js/zipper.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>
