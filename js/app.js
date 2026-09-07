@@ -1,251 +1,262 @@
 /**
- * Pusat Kretek & Reposisi Holistic - Application Engine
- * Handles dynamic therapist directory, city filtering, live search,
- * interactive modal rendering, and responsive interactions.
+ * SentraKretek.id - Application Engine
+ * Manages compact therapist directory, category filtering, city chips,
+ * instant live search, and full detailed modal rendering on click.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-  // -------------------------------------------------------------
-  // 1. Mobile Menu Toggle
-  // -------------------------------------------------------------
-  const mobileToggle = document.getElementById('mobileToggle');
-  const navLinks = document.getElementById('navLinks');
-
-  if (mobileToggle && navLinks) {
-    mobileToggle.addEventListener('click', () => {
-      const isExpanded = mobileToggle.getAttribute('aria-expanded') === 'true';
-      mobileToggle.setAttribute('aria-expanded', !isExpanded);
-      navLinks.classList.toggle('active');
-    });
-
-    navLinks.querySelectorAll('.nav-link').forEach(link => {
-      link.addEventListener('click', () => {
-        navLinks.classList.remove('active');
-        mobileToggle.setAttribute('aria-expanded', 'false');
-      });
-    });
-  }
-
-  // -------------------------------------------------------------
-  // 2. Dynamic Therapist Directory & Filters
-  // -------------------------------------------------------------
   const therapistsGrid = document.getElementById('therapistsGrid');
-  const filterBtns = document.querySelectorAll('.filter-tab-btn');
   const searchInput = document.getElementById('therapistSearch');
+  const btnClearSearch = document.getElementById('btnClearSearch');
   const resultsCount = document.getElementById('resultsCount');
+  const catButtons = document.querySelectorAll('.cat-col-btn');
+  const cityChips = document.querySelectorAll('.city-chip');
 
-  let currentFilter = 'all';
+  let activeCategory = 'all';
+  let activeCity = 'all';
   let searchQuery = '';
 
-  function renderTherapists() {
+  // -------------------------------------------------------------
+  // 1. Filter & Render Directory Cards
+  // -------------------------------------------------------------
+  function filterAndRender() {
     if (!therapistsGrid || typeof THERAPISTS_DATA === 'undefined') return;
 
+    const query = searchQuery.toLowerCase().trim();
+
     const filtered = THERAPISTS_DATA.filter(t => {
-      // Filter by city/region
-      const matchCity = currentFilter === 'all' || 
-                        t.regionGroup === currentFilter || 
-                        t.city.toLowerCase().includes(currentFilter.toLowerCase());
+      // 1. Category filter
+      const matchCategory = activeCategory === 'all' || 
+        t.categoryTags.includes(activeCategory);
 
-      // Filter by search query
-      const q = searchQuery.toLowerCase().trim();
-      const matchSearch = !q || 
-        t.brand.toLowerCase().includes(q) ||
-        t.practitioner.toLowerCase().includes(q) ||
-        t.city.toLowerCase().includes(q) ||
-        t.address.toLowerCase().includes(q) ||
-        t.services.some(s => s.toLowerCase().includes(q)) ||
-        t.complaints.some(c => c.toLowerCase().includes(q));
+      // 2. City filter
+      const matchCity = activeCity === 'all' || 
+        t.regionKey === activeCity;
 
-      return matchCity && matchSearch;
+      // 3. Search query filter
+      const matchSearch = !query || 
+        t.brand.toLowerCase().includes(query) ||
+        t.practitioner.toLowerCase().includes(query) ||
+        t.city.toLowerCase().includes(query) ||
+        t.district.toLowerCase().includes(query) ||
+        t.primarySpecialties.some(s => s.toLowerCase().includes(query)) ||
+        t.complaintsDetailed.some(c => c.toLowerCase().includes(query));
+
+      return matchCategory && matchCity && matchSearch;
     });
 
+    // Update results badge
     if (resultsCount) {
-      resultsCount.textContent = `${filtered.length} Cabang / Sentra Terapi Ditemukan`;
+      resultsCount.textContent = `${filtered.length} Tempat Terapi`;
     }
 
     if (filtered.length === 0) {
       therapistsGrid.innerHTML = `
-        <div class="no-results-card">
-          <p>🔍 Tidak ditemukan terapis yang cocok dengan pencarian <strong>"${searchQuery}"</strong>.</p>
-          <button class="btn btn-secondary btn-sm" onclick="resetSearchFilter()">Tampilkan Semua Cabang</button>
+        <div class="empty-results-box">
+          <p>🔍 Tidak ditemukan tempat terapi yang sesuai dengan filter atau kata kunci Anda.</p>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="resetAllFilters()">Reset Semua Filter</button>
         </div>
       `;
       return;
     }
 
+    // Render Compact Directory Cards
     therapistsGrid.innerHTML = filtered.map(t => `
-      <article class="therapist-card" data-id="${t.id}">
-        <div class="t-card-header">
-          <div class="t-avatar-box">
-            <img src="${t.avatar}" alt="${t.brand} - ${t.practitioner}" class="t-avatar-img" loading="lazy">
-            <span class="t-city-badge">📍 ${t.city}</span>
+      <article class="compact-therapist-card" data-id="${t.id}">
+        <!-- Top Bar: Avatar & Brand Info -->
+        <div class="c-card-top" onclick="window.showTherapistDetail('${t.id}')" role="button" tabindex="0" title="Klik untuk lihat profil lengkap">
+          <div class="c-card-avatar">
+            <img src="${t.avatar}" alt="${t.brand}" loading="lazy">
+            <span class="c-avatar-city">📍 ${t.city}</span>
           </div>
-          <div class="t-header-text">
-            <span class="t-tag-badge">${t.badge}</span>
-            <h3 class="t-brand-name">${t.brand}</h3>
-            <p class="t-practitioner-name">${t.practitioner}</p>
-            <p class="t-role-text">${t.role}</p>
+          <div class="c-card-meta">
+            <div class="c-badge-row">
+              <span class="c-code-badge">${t.shortCode}</span>
+              <span class="c-verified-badge">✓ Terverifikasi</span>
+            </div>
+            <h3 class="c-brand-title">${t.brand}</h3>
+            <p class="c-practitioner">${t.practitioner}</p>
+            <p class="c-assoc">${t.association}</p>
           </div>
         </div>
 
-        <div class="t-card-body">
-          <div class="t-price-box">
-            <span class="t-price-label">Tarif Sesi:</span>
-            <span class="t-price-val">${t.priceRange}</span>
+        <!-- Middle: Specialties & Pricing -->
+        <div class="c-card-mid" onclick="window.showTherapistDetail('${t.id}')" role="button" tabindex="0">
+          <div class="c-price-strip">
+            <span class="c-price-label">Tarif:</span>
+            <span class="c-price-amount">${t.priceRange}</span>
           </div>
 
-          <div class="t-services-list">
-            ${t.services.slice(0, 4).map(s => `<span class="service-pill">✓ ${s}</span>`).join('')}
-            ${t.services.length > 4 ? `<span class="service-pill more-pill">+${t.services.length - 4} lainnya</span>` : ''}
+          <div class="c-services-row">
+            ${t.primarySpecialties.map(s => `<span class="c-service-pill">✓ ${s}</span>`).join('')}
           </div>
 
-          <p class="t-address-snippet">
+          <div class="c-landmark-strip">
             <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
             <span><strong>Patokan:</strong> ${t.landmark}</span>
-          </p>
+          </div>
         </div>
 
-        <div class="t-card-footer">
-          <button type="button" class="btn btn-outline btn-sm btn-open-detail" data-id="${t.id}" aria-haspopup="dialog">
-            <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-            Detail & Galeri
+        <!-- Footer: Action Buttons -->
+        <div class="c-card-actions">
+          <button type="button" class="btn btn-outline btn-sm btn-view-profile" onclick="window.showTherapistDetail('${t.id}')">
+            👁️ Profil & Galeri
           </button>
-          <a href="https://wa.me/${t.waNumber}?text=Halo%20${encodeURIComponent(t.brand)}%20(${encodeURIComponent(t.practitioner)})%2C%20saya%20ingin%20konsultasi%20dan%20reservasi%20terapi." target="_blank" rel="noopener" class="btn btn-primary btn-sm btn-wa-card">
+          <a href="https://wa.me/${t.waNumber}?text=Halo%20${encodeURIComponent(t.brand)}%20(${encodeURIComponent(t.practitioner)})%2C%20saya%20menemukan%20profil%20Anda%20di%20SentraKretek.id%20dan%20ingin%20konsultasi%20jadwal%20terapi." target="_blank" rel="noopener" class="btn btn-primary btn-sm btn-wa-direct">
             <svg class="icon-sm" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2z"/></svg>
-            Chat WA
+            Chat WhatsApp
           </a>
         </div>
       </article>
     `).join('');
-
-    // Bind detail buttons
-    therapistsGrid.querySelectorAll('.btn-open-detail').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const id = btn.getAttribute('data-id');
-        openTherapistModal(id);
-      });
-    });
   }
 
-  // Filter Buttons binding
-  filterBtns.forEach(btn => {
+  // -------------------------------------------------------------
+  // 2. Category & City Filters Interaction
+  // -------------------------------------------------------------
+  catButtons.forEach(btn => {
     btn.addEventListener('click', () => {
-      filterBtns.forEach(b => b.classList.remove('active'));
+      catButtons.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      currentFilter = btn.getAttribute('data-filter') || 'all';
-      renderTherapists();
+      activeCategory = btn.getAttribute('data-category') || 'all';
+      filterAndRender();
     });
   });
 
-  // Search input binding
+  cityChips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      cityChips.forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      activeCity = chip.getAttribute('data-city') || 'all';
+      filterAndRender();
+    });
+  });
+
+  // Search input
   if (searchInput) {
     searchInput.addEventListener('input', (e) => {
       searchQuery = e.target.value;
-      renderTherapists();
+      if (btnClearSearch) {
+        btnClearSearch.style.display = searchQuery ? 'block' : 'none';
+      }
+      filterAndRender();
     });
   }
 
-  window.resetSearchFilter = function() {
+  if (btnClearSearch) {
+    btnClearSearch.addEventListener('click', () => {
+      searchQuery = '';
+      searchInput.value = '';
+      btnClearSearch.style.display = 'none';
+      filterAndRender();
+    });
+  }
+
+  window.resetAllFilters = function() {
+    activeCategory = 'all';
+    activeCity = 'all';
     searchQuery = '';
-    currentFilter = 'all';
     if (searchInput) searchInput.value = '';
-    filterBtns.forEach(b => {
-      if (b.getAttribute('data-filter') === 'all') b.classList.add('active');
+    if (btnClearSearch) btnClearSearch.style.display = 'none';
+
+    catButtons.forEach(b => {
+      if (b.getAttribute('data-category') === 'all') b.classList.add('active');
       else b.classList.remove('active');
     });
-    renderTherapists();
+
+    cityChips.forEach(c => {
+      if (c.getAttribute('data-city') === 'all') c.classList.add('active');
+      else c.classList.remove('active');
+    });
+
+    filterAndRender();
   };
 
-  // Initial directory render
-  renderTherapists();
-
   // -------------------------------------------------------------
-  // 3. Dynamic Modal for Any Therapist (<dialog>)
+  // 3. Deep-Dive Detailed Modal (Muncul saat diklik)
   // -------------------------------------------------------------
   const modalDialog = document.getElementById('therapistModal');
   const btnCloseModal = document.getElementById('btnCloseModal');
-  const btnCloseModalFooter = document.getElementById('btnCloseModalFooter');
+  const btnCloseModalBottom = document.getElementById('btnCloseModalBottom');
 
-  function openTherapistModal(therapistId) {
+  window.showTherapistDetail = function(therapistId) {
     if (!modalDialog || typeof THERAPISTS_DATA === 'undefined') return;
 
     const t = THERAPISTS_DATA.find(item => item.id === therapistId) || THERAPISTS_DATA[0];
 
-    // Populate Modal Elements
-    const elAvatar = document.getElementById('modalAvatar');
-    const elBrand = document.getElementById('modalBrand');
-    const elPractitioner = document.getElementById('modalPractitioner');
-    const elRole = document.getElementById('modalRole');
-    const elMotto = document.getElementById('modalMotto');
-    const elBadge = document.getElementById('modalBadge');
-    const elPrice = document.getElementById('modalPrice');
-    const elCity = document.getElementById('modalCity');
-    const elAddress = document.getElementById('modalAddress');
-    const elMapsBtn = document.getElementById('modalMapsBtn');
-    const elWaBtn = document.getElementById('modalWaBtn');
-    const elWaFooterBtn = document.getElementById('modalWaFooterBtn');
-    const elPhilosophy = document.getElementById('modalPhilosophy');
-    const elSpecialtiesGrid = document.getElementById('modalSpecialtiesGrid');
-    const elTrackRecordList = document.getElementById('modalTrackRecordList');
-    const elGalleryContainer = document.getElementById('modalGalleryContainer');
+    // Populate Top Header
+    document.getElementById('modalAvatar').src = t.avatar;
+    document.getElementById('modalAvatar').alt = t.brand;
+    document.getElementById('modalTag').textContent = `ID: ${t.shortCode} • Sentra Resmi`;
+    document.getElementById('modalLocBadge').textContent = `📍 ${t.city}`;
+    document.getElementById('modalBrandTitle').textContent = t.brand;
+    document.getElementById('modalPractitioner').textContent = t.practitioner;
+    document.getElementById('modalAssoc').textContent = t.association;
+    document.getElementById('modalPrice').textContent = `Tarif: ${t.priceRange} (${t.priceNote})`;
+    document.getElementById('modalHours').textContent = `⏱️ ${t.operatingHours}`;
 
-    if (elAvatar) elAvatar.src = t.avatar;
-    if (elBrand) elBrand.textContent = t.brand;
-    if (elPractitioner) elPractitioner.textContent = t.practitioner;
-    if (elRole) elRole.textContent = t.role;
-    if (elMotto) elMotto.textContent = `"${t.motto}"`;
-    if (elBadge) elBadge.textContent = t.badge;
-    if (elPrice) elPrice.textContent = t.priceRange;
-    if (elCity) elCity.textContent = `${t.city}, ${t.province}`;
-    if (elAddress) elAddress.textContent = t.address;
-    if (elMapsBtn) elMapsBtn.href = t.mapsUrl;
+    // WhatsApp Links
+    const waText = `Halo ${encodeURIComponent(t.brand)} (${encodeURIComponent(t.practitioner)}), saya melihat profil lengkap Anda di SentraKretek.id dan ingin konsultasi serta reservasi jadwal terapi.`;
+    const waUrl = `https://wa.me/${t.waNumber}?text=${waText}`;
 
-    const waLink = `https://wa.me/${t.waNumber}?text=Halo%20${encodeURIComponent(t.brand)}%20(${encodeURIComponent(t.practitioner)})%2C%20saya%20tertarik%20dengan%20layanan%20terapi%20dan%20ingin%20konsultasi.`;
-    if (elWaBtn) elWaBtn.href = waLink;
-    if (elWaFooterBtn) elWaFooterBtn.href = waLink;
+    document.getElementById('modalWaPrimary').href = waUrl;
+    document.getElementById('modalWaBottom').href = waUrl;
+    document.getElementById('modalMapsPrimary').href = t.mapsUrl;
+    document.getElementById('modalMapsSecondary').href = t.mapsUrl;
 
-    if (elPhilosophy) elPhilosophy.textContent = t.experienceDetails.philosophy;
+    // Overview & Motto
+    document.getElementById('modalOverview').textContent = t.overview;
+    document.getElementById('modalMotto').innerHTML = `<em>"${t.motto}"</em>`;
 
-    // Specialties
-    if (elSpecialtiesGrid) {
-      elSpecialtiesGrid.innerHTML = t.experienceDetails.specialties.map(spec => `
-        <div class="skill-box">
-          <h4>${spec.name}</h4>
-          <p>${spec.desc}</p>
+    // Action Gallery Grid
+    const galleryGrid = document.getElementById('modalGalleryGrid');
+    if (galleryGrid) {
+      if (t.actionPhotos && t.actionPhotos.length > 0) {
+        galleryGrid.innerHTML = t.actionPhotos.map(p => `
+          <div class="gallery-photo-card">
+            <div class="photo-aspect">
+              <img src="${p.url}" alt="${p.caption}" loading="lazy">
+            </div>
+            <p class="photo-caption">${p.caption}</p>
+          </div>
+        `).join('');
+      } else {
+        galleryGrid.innerHTML = '<p class="text-muted">Dokumentasi foto akan segera diperbarui.</p>';
+      }
+    }
+
+    // Services Grid
+    const servicesGrid = document.getElementById('modalServicesGrid');
+    if (servicesGrid) {
+      servicesGrid.innerHTML = t.servicesDetailed.map(s => `
+        <div class="service-detail-item">
+          <h4>${s.title}</h4>
+          <p>${s.desc}</p>
         </div>
       `).join('');
     }
 
-    // Track record
-    if (elTrackRecordList) {
-      elTrackRecordList.innerHTML = t.experienceDetails.trackRecord.map(rec => `
-        <li>${rec}</li>
+    // Complaints Checklist
+    const complaintsList = document.getElementById('modalComplaintsList');
+    if (complaintsList) {
+      complaintsList.innerHTML = t.complaintsDetailed.map(c => `
+        <div class="complaint-chip-item">
+          <span class="chk-icon">✔</span>
+          <span>${c}</span>
+        </div>
       `).join('');
     }
 
-    // Gallery
-    if (elGalleryContainer) {
-      if (t.gallery && t.gallery.length > 0) {
-        elGalleryContainer.innerHTML = `
-          <div class="modal-gallery-grid">
-            ${t.gallery.map(img => `
-              <div class="modal-gallery-item">
-                <img src="${img}" alt="Dokumentasi Terapi ${t.brand}" loading="lazy">
-              </div>
-            `).join('')}
-          </div>
-        `;
-      } else {
-        elGalleryContainer.innerHTML = '';
-      }
-    }
+    // Address & Landmark
+    document.getElementById('modalFullAddress').textContent = t.address;
+    document.getElementById('modalLandmark').innerHTML = `<strong>Patokan:</strong> ${t.landmark}`;
 
-    // Show Dialog
+    // Open Modal
     if (typeof modalDialog.showModal === 'function') {
       modalDialog.showModal();
       document.body.style.overflow = 'hidden';
     }
-  }
+  };
 
   function closeModal() {
     if (!modalDialog) return;
@@ -256,14 +267,14 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   if (btnCloseModal) btnCloseModal.addEventListener('click', closeModal);
-  if (btnCloseModalFooter) btnCloseModalFooter.addEventListener('click', closeModal);
+  if (btnCloseModalBottom) btnCloseModalBottom.addEventListener('click', closeModal);
 
   if (modalDialog) {
     modalDialog.addEventListener('close', () => {
       document.body.style.overflow = '';
     });
 
-    // Fallback light-dismiss for browsers without closedby support
+    // Light-dismiss boundary check fallback
     if (!('closedBy' in HTMLDialogElement.prototype)) {
       modalDialog.addEventListener('click', (event) => {
         if (event.target !== modalDialog) return;
@@ -280,25 +291,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Hero Quick View button
-  const btnHeroQuickView = document.getElementById('btnHeroQuickView');
-  if (btnHeroQuickView) {
-    btnHeroQuickView.addEventListener('click', () => {
-      openTherapistModal('andi-bogor');
-    });
-  }
+  // Initial render
+  filterAndRender();
 
-  // -------------------------------------------------------------
-  // 4. Navbar scroll shadow
-  // -------------------------------------------------------------
-  const navbar = document.getElementById('navbar');
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 40) {
-      navbar.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.08)';
-    } else {
-      navbar.style.boxShadow = 'none';
-    }
-  }, { passive: true });
-
-  console.log('✅ Sentra Terapi & Reposisi directory initialized successfully.');
+  console.log('✅ SentraKretek.id marketplace directory initialized successfully.');
 });

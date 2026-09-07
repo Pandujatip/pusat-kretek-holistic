@@ -1,146 +1,154 @@
 /**
- * Database & Render Engine Terapis & Sentra Reposisi
- * Dirancang skalabel hingga 50+ terapis di seluruh Indonesia
+ * Database Terapis & Sentra Reposisi Nusantara
+ * Model data skalabel untuk 50+ praktisi di berbagai kota.
  */
 
 const THERAPISTS_DATA = [
   {
-    id: "andi-bogor",
-    brand: "Pusat Kretek Holistic",
-    practitioner: "Pak Andi",
-    role: "Praktisi Terapi Holistik, Bone Setting & Bio Elektrik",
-    motto: "Seduluran, Berkarya, Berbagi — Mengembalikan keselarasan tubuh dan syaraf secara alami.",
-    city: "Kab. Bogor",
-    district: "Gunung Putri (Bojong Kulur)",
-    province: "Jawa Barat",
-    regionGroup: "jabodetabek",
-    address: "Jalan Puri Delta, RT.2/RW.8, No. 29 Kampung Lembur-BojongKulur (Rumah cat hijau), KAB. BOGOR, GUNUNG PUTRI, JAWA BARAT, ID, 16969",
-    landmark: "Rumah Cat Hijau No. 29",
-    phone: "081818100534",
-    waNumber: "6281818100534",
-    priceRange: "Konsultasi & Terapi Ramah Terjangkau",
-    badge: "Praktisi Utama",
-    avatar: "public/images/owner-andi.png",
-    gallery: [
-      "public/images/owner-andi.png"
-    ],
-    mapsUrl: "https://maps.app.goo.gl/LiYd9pJ9hkh8bPaG6",
-    services: [
-      "Pijat Kretek (Bone Setting)",
-      "Akupunktur Medis",
-      "Bekam Medis & Sunnah",
-      "Bio Elektrik"
-    ],
-    complaints: [
-      "Stroke & Pasca Stroke",
-      "Syaraf Kejepit (HNP)",
-      "Keluhan Tulang & Postur",
-      "Keluhan Otot dan Sendi",
-      "Vertigo & Sakit Kepala Berat",
-      "GERD & Asam Lambung",
-      "Pegal Linu & Kaku Leher"
-    ],
-    experienceDetails: {
-      philosophy: "Memulihkan keseimbangan alami tubuh dan jalur syaraf agar tubuh dapat menyembuhkan dirinya sendiri (Self-Healing Mechanism).",
-      specialties: [
-        {
-          name: "🦴 Reposisi Tulang & Pijat Kretek",
-          desc: "Deteksi dan reposisi subluksasi tulang belakang (servikal, torakal, lumbal) dan panggul untuk membebaskan jepitan saraf secara presisi."
-        },
-        {
-          name: "⚡ Bio Elektrik Stimulator",
-          desc: "Penyaluran mikro-arus biologis untuk meregenerasi sel saraf motorik yang melemah atau mati rasa pasca stroke."
-        },
-        {
-          name: "🎯 Akupunktur Titik Meridian",
-          desc: "Penusukan jarum steril guna menyeimbangkan asam lambung (GERD), melancarkan sirkulasi pembuluh darah otak (vertigo), dan meredakan nyeri."
-        },
-        {
-          name: "🩸 Bekam Medis & Sunnah",
-          desc: "Detoksifikasi darah kotor/stagnan dan racun metabolik dengan standar sterilisasi medis ketat."
-        }
-      ],
-      trackRecord: [
-        "Membantu pemulihan pasien stroke agar dapat kembali menggerakkan tangan dan kaki.",
-        "Mengatasi nyeri syaraf kejepit menahun tanpa perlu tindakan operasi.",
-        "Merapikan postur skoliosis dan panggul miring akibat salah postur."
-      ]
-    }
-  },
-  {
     id: "urc-ungaran",
-    brand: "Ungaran Reposisi Center (URC)",
+    brand: "Ungaran Reposisi Center",
+    shortCode: "URC",
     practitioner: "Master Terapis URC",
-    role: "Spesialis Manipulasi Manual, Reposisi Tulang Sendi & Sport Massage",
-    motto: "Manipulasi Manual Reposisi Tulang Sendi untuk Pemulihan Ketegangan Otot, Pergeseran Ruas Tulang & Penekanan Syaraf.",
-    city: "Kab. Semarang",
+    association: "Perkumpulan Terapis Manual & Asosiasi Reposisi Tulang Sendi (UAR)",
+    city: "Ungaran / Kab. Semarang",
     district: "Ungaran Timur (Beji)",
     province: "Jawa Tengah",
-    regionGroup: "jateng",
+    regionKey: "semarang",
+    categoryTags: ["kretek", "sport-massage", "akupunktur", "bekam"],
+    avatar: "public/images/urc-terapi-1.jpg",
+    actionPhotos: [
+      {
+        url: "public/images/urc-terapi-1.jpg",
+        caption: "Manipulasi Sendi Kaki & Panggul (Koreksi Dislokasi & Pelvic Alignment)"
+      },
+      {
+        url: "public/images/urc-terapi-3.jpg",
+        caption: "Penyelarasan Ruas Tulang Belakang (Lumbal Adjustment untuk Syaraf Kejepit)"
+      },
+      {
+        url: "public/images/urc-terapi-4.png",
+        caption: "Smart Massage & Pemulihan Ketegangan Otot Torakal (UAR Reposisi)"
+      },
+      {
+        url: "public/images/urc-terapi-2.jpg",
+        caption: "Pemeriksaan Biomekanika Tubuh & Evaluasi Rentang Gerak"
+      }
+    ],
+    priceRange: "Rp 150.000 – Rp 250.000",
+    priceNote: "Sesuai kombinasi tindakan (Reposisi + Massage / Akupunktur / Bekam)",
     address: "Serasi VIII/D 89, Pondok Babadan Baru, Beji, Ungaran Timur, Kab. Semarang, Jawa Tengah",
-    landmark: "Pondok Babadan Baru Blok D 89",
+    landmark: "Pondok Babadan Baru Blok D No. 89",
     phone: "0821-3892-1941",
     waNumber: "6282138921941",
-    priceRange: "Rp 150.000 - Rp 250.000",
-    badge: "Sentra Terapi Ungaran",
-    avatar: "public/images/urc-terapi-1.jpg",
-    gallery: [
-      "public/images/urc-terapi-1.jpg",
-      "public/images/urc-terapi-2.jpg",
-      "public/images/urc-terapi-3.jpg",
-      "public/images/urc-terapi-4.png"
-    ],
     mapsUrl: "https://maps.app.goo.gl/UqWcTa5V3NcM3pCq6",
-    services: [
+    motto: "Manipulasi Manual Reposisi Tulang Sendi untuk Pemulihan Ketegangan Otot, Pergeseran Ruas Tulang & Penekanan Syaraf.",
+    overview: "Ungaran Reposisi Center (URC) adalah sentra rujukan terapi manual biomekanika sendi dan pemulihan muskuloskeletal terstandarisasi di kawasan Ungaran dan Semarang. Menggabungkan teknik reposisi sendi presisi, sport massage intensif untuk atlet dan masyarakat, akupunktur medis & estetika, serta bekam higienis.",
+    primarySpecialties: [
       "Reposisi Tulang & Sendi",
-      "Bekam Medis",
+      "Sport Massage (Deep Tissue)",
+      "Akupunktur Medis & Estetika",
+      "Bekam Medis"
+    ],
+    servicesDetailed: [
+      {
+        title: "🦴 Reposisi Tulang & Sendi (Spine & Joint Realignment)",
+        desc: "Koreksi dislokasi mikro pada sendi bahu, panggul, lutut, dan ruas tulang belakang yang menyebabkan penekanan syaraf."
+      },
+      {
+        title: "🏃 Sport Massage & Smart Massage",
+        desc: "Pelepasan ketegangan otot dalam (deep tissue release) untuk mengatasi spasme, perlengketan fasia, dan cedera otot akibat aktivitas berat atau olahraga."
+      },
+      {
+        title: "✨ Akupunktur Estetika Wajah & Tubuh",
+        desc: "Stimulasi titik meridian untuk meremajakan sel kulit, melancarkan aliran energi, dan mengencangkan otot wajah secara alami."
+      },
+      {
+        title: "🎯 Akupunktur Medis",
+        desc: "Penanganan gangguan saraf, sakit kepala menahun, peredaran darah tersumbat, dan nyeri sendi menggunakan jarum steril sekali pakai."
+      },
+      {
+        title: "🩸 Bekam Medis Steril",
+        desc: "Pengangkatan darah kotor, asam urat, dan toksin metabolisme tubuh dengan peralatan higienis sekali pakai."
+      }
+    ],
+    complaintsDetailed: [
+      "Syaraf Kejepit (HNP Pinggang & Leher)",
+      "Kekakuan Otot Berat & Spasme Punggung",
+      "Keterbatasan Rentang Gerak Sendi",
+      "Masalah Sendi Bahu (Frozen Shoulder), Lutut & Engkel",
+      "Cedera Olahraga & Pemulihan Fisik Pasca Cedera",
+      "Pergeseran Panggul & Ruas Tulang Belakang"
+    ],
+    operatingHours: "Senin – Minggu (08.00 – 20.00 WIB) • Dengan Reservasi Terlebih Dahulu"
+  },
+  {
+    id: "andi-bogor",
+    brand: "Pusat Kretek Holistic",
+    shortCode: "PKH",
+    practitioner: "Pak Andi",
+    association: "SATRIA (Seduluran, Berkarya, Berbagi) & Praktisi Terapi Holistik Terpadu",
+    city: "Bojong Kulur / Kab. Bogor",
+    district: "Gunung Putri (Bojong Kulur)",
+    province: "Jawa Barat",
+    regionKey: "bogor",
+    categoryTags: ["kretek", "bio-elektrik", "akupunktur", "bekam"],
+    avatar: "public/images/owner-andi.png",
+    actionPhotos: [
+      {
+        url: "public/images/owner-andi.png",
+        caption: "Pak Andi - Praktisi Utama Pusat Kretek Holistic Bojong Kulur"
+      }
+    ],
+    priceRange: "Ramah & Terjangkau",
+    priceNote: "Konsultasi awal & tindakan disesuaikan kondisi pasien",
+    address: "Jalan Puri Delta, RT.2/RW.8, No. 29 Kampung Lembur-BojongKulur (Rumah cat hijau), KAB. BOGOR, GUNUNG PUTRI, JAWA BARAT, ID, 16969",
+    landmark: "Rumah Cat Hijau No. 29 di Kampung Lembur - Bojong Kulur",
+    phone: "0818-1810-0534",
+    waNumber: "6281818100534",
+    mapsUrl: "https://maps.app.goo.gl/LiYd9pJ9hkh8bPaG6",
+    motto: "Seduluran, Berkarya, Berbagi — Memulihkan keselarasan sistem syaraf, otot, dan struktur tulang dengan niat tulus membantu sesama.",
+    overview: "Pusat Kretek Holistic dikelola langsung oleh Pak Andi dengan jam terbang tinggi menangani ratusan pasien muskuloskeletal. Mengutamakan pendekatan holistik 4-in-1 yang menyasar akar masalah, bukan sekadar menghilangkan rasa sakit sementara.",
+    primarySpecialties: [
+      "Pijat Kretek (Bone Setting)",
+      "Bio Elektrik Stimulator",
       "Akupunktur Medis",
-      "Sport Massage",
-      "Akupunktur Estetika"
+      "Bekam Medis & Sunnah"
     ],
-    complaints: [
-      "Syaraf Kejepit (HNP)",
-      "Kekakuan Otot Berat",
-      "Keterbatasan Rentang Gerak",
-      "Masalah Sendi & Pengapuran",
-      "Cedera Olahraga (Sports Injury)",
-      "Kelelahan Fisik Kronis"
+    servicesDetailed: [
+      {
+        title: "🦴 Pijat Kretek (Holistic Bone Setting)",
+        desc: "Teknik reposisi struktur tulang belakang dan sendi panggul secara presisi untuk membebaskan jepitan saraf tanpa rasa sakit berlebih."
+      },
+      {
+        title: "⚡ Bio Elektrik Stimulator Saraf",
+        desc: "Penyaluran arus mikro biologis untuk mereaktivasi saraf motorik dan sensorik yang melemah atau lumpuh pasca stroke."
+      },
+      {
+        title: "🎯 Akupunktur Medis Meridian",
+        desc: "Penyeimbangan fungsi organ tubuh, mengatasi asam lambung (GERD), melancarkan sirkulasi pembuluh darah otak (vertigo/migrain)."
+      },
+      {
+        title: "🩸 Bekam Medis & Sunnah",
+        desc: "Detoksifikasi darah kotor, asam urat, dan penumpukan racun metabolik dengan standar higienis steril sekali pakai."
+      }
     ],
-    experienceDetails: {
-      philosophy: "Menggabungkan manipulasi biomekanika sendi modern dengan terapi manual holistik dan sport massage untuk pemulihan mobilitas optimal.",
-      specialties: [
-        {
-          name: "🦴 Reposisi Tulang & Sendi (Joint & Spine Realignment)",
-          desc: "Teknik manipulasi manual presisi untuk mengoreksi pergeseran ruas tulang belakang dan persendian tubuh yang memicu penekanan syaraf."
-        },
-        {
-          name: "🏃 Sport Massage & Pelepasan Otot Kaku",
-          desc: "Teknik pemijatan khusus jaringan dalam (deep tissue) untuk atlet maupun masyarakat umum guna mengurai perlengketan fasia dan kekakuan otot ekstrem."
-        },
-        {
-          name: "✨ Akupunktur Estetika & Kesehatan",
-          desc: "Stimulasi titik jarum halus untuk mengencangkan otot wajah, melancarkan regenerasi kolagen, dan menyelaraskan kesehatan holistik tubuh."
-        },
-        {
-          name: "🩸 Bekam & Akupunktur Medis",
-          desc: "Terapi pembersihan darah toksik dan stimulasi meridian saraf untuk meredakan inflamasi serta melancarkan sirkulasi darah."
-        }
-      ],
-      trackRecord: [
-        "Menangani ratusan kasus kekakuan otot dan keterbatasan gerak pada atlet dan pekerja kantoran.",
-        "Berpengalaman dalam mengoreksi dislokasi sendi bahu, lutut, panggul, dan ruas tulang pinggang.",
-        "Telah tersertifikasi dalam perkumpulan asosiasi terapis manual dan reposisi tulang sendi."
-      ]
-    }
+    complaintsDetailed: [
+      "Pemulihan Pasca Stroke (Anggota Gerak Kaku/Lemas)",
+      "Syaraf Kejepit (HNP Servikal & Lumbal)",
+      "Keluhan Tulang & Postur Miring (Skoliosis/Panggul)",
+      "Keluhan Otot dan Sendi Kaku",
+      "Vertigo, Migrain & Sakit Kepala Berat",
+      "GERD & Asam Lambung Menahun"
+    ],
+    operatingHours: "Buka Setiap Hari (Sesuai Reservasi Janji Temu WhatsApp)"
   }
 ];
 
-// Helper to get all cities
-function getAvailableCities() {
-  const cities = new Set();
-  THERAPISTS_DATA.forEach(t => cities.add(t.city));
-  return Array.from(cities);
+// Helper functions for dynamic UI
+function getAllTherapists() {
+  return THERAPISTS_DATA;
 }
 
-// Global active therapist for modal
-window.activeTherapist = THERAPISTS_DATA[0];
+function getTherapistById(id) {
+  return THERAPISTS_DATA.find(t => t.id === id) || THERAPISTS_DATA[0];
+}
