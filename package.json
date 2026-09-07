@@ -1,0 +1,23 @@
+{
+  "name": "pusat-kretek-holistic",
+  "version": "1.0.0",
+  "description": "Website Landing Page Resmi Pusat Kretek Holistic - Terapi Holistik & Pijat Kretek Pak Andi",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "tunnel": "node server.js --tunnel"
+  },
+  "dependencies": {
+    "localtunnel": "^2.0.2"
+  },
+  "keywords": [
+    "kretek",
+    "terapi",
+    "holistic",
+    "akupunktur",
+    "bekam",
+    "bio-elektrik"
+  ],
+  "author": "Pusat Kretek Holistic",
+  "license": "ISC"
+}
