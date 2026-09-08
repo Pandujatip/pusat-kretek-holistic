@@ -150,9 +150,10 @@ async function loadTherapists() {
 
   try {
     const res = await fetch(`${API_BASE}/therapists?v=${Date.now()}`);
-    if (!res.ok) throw new Error('Gagal mengambil data terapis');
+    if (!res.ok) throw new Error('Gagal mengambil data terapis (Status: ' + res.status + ')');
     
-    therapistsState = await res.json();
+    const json = await res.json();
+    therapistsState = Array.isArray(json) ? json : (json && Array.isArray(json.therapists) ? json.therapists : []);
     renderTherapists(therapistsState);
     updateStats(therapistsState);
   } catch (err) {
@@ -162,8 +163,9 @@ async function loadTherapists() {
 }
 
 function updateStats(list) {
-  document.getElementById('statTotalCount').textContent = `${list.length} Terapis`;
-  const cities = new Set(list.map(t => (t.city || '').trim()).filter(Boolean));
+  const arr = Array.isArray(list) ? list : [];
+  document.getElementById('statTotalCount').textContent = `${arr.length} Terapis`;
+  const cities = new Set(arr.map(t => (t.city || '').trim()).filter(Boolean));
   document.getElementById('statCitiesCount').textContent = `${cities.size} Kota`;
 }
 
@@ -171,14 +173,15 @@ function renderTherapists(list) {
   const container = document.getElementById('therapistsList');
   const emptyState = document.getElementById('emptyState');
 
-  if (!list || list.length === 0) {
+  const arr = Array.isArray(list) ? list : [];
+  if (arr.length === 0) {
     container.innerHTML = '';
     emptyState.classList.remove('hidden');
     return;
   }
 
   emptyState.classList.add('hidden');
-  container.innerHTML = list.map(t => {
+  container.innerHTML = arr.map(t => {
     const categoryBadges = (t.categoryTags || []).map(cat => {
       const labels = {
         'kretek': 'Pijat Kretek',

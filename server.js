@@ -220,7 +220,7 @@ const server = http.createServer(async (req, res) => {
   // 3. GET /api/therapists (Public)
   if (req.method === 'GET' && pathname === '/api/therapists') {
     const data = readTherapists();
-    return sendJson(res, 200, { success: true, total: data.length, therapists: data });
+    return sendJson(res, 200, data);
   }
 
   // 4. POST /api/therapists (Create new - Auth Required)
