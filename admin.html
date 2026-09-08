@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Portal SATRIA Digital • Seduluran Terapis Recovery Indonesia</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="public/images/logo-satria.png">
+  
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Admin Stylesheet -->
+  <link rel="stylesheet" href="css/admin.css?v=20260908b">
+</head>
+<body>
+
+  <!-- ====================================================
+       1. LOGIN SCREEN
+       ==================================================== -->
+  <section id="loginScreen" class="login-container">
+    <div class="login-card">
+      <div class="login-header">
+        <div class="brand-logo-wrapper">
+          <img src="public/images/logo-satria.png" alt="Logo SATRIA" class="brand-logo">
+        </div>
+        <h1>Portal Admin SATRIA</h1>
+        <p class="subtitle">Seduluran Terapis Recovery Indonesia</p>
+        <div class="motto-badge">
+          <span>Bersama Kita Kuat, Bersama Kita Berkembang</span>
+        </div>
+      </div>
+
+      <div id="loginAlert" class="alert-box error hidden">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        <span id="loginAlertText">Username atau password salah!</span>
+      </div>
+
+      <form id="loginForm" class="login-form">
+        <div class="form-group">
+          <label for="username"><i class="fa-solid fa-user"></i> Username Admin</label>
+          <input type="text" id="username" class="form-control" placeholder="Masukkan username" required autofocus autocomplete="username">
+        </div>
+
+        <div class="form-group">
+          <label for="password"><i class="fa-solid fa-lock"></i> Password Otorisasi</label>
+          <div class="password-wrapper">
+            <input type="password" id="password" class="form-control" placeholder="Masukkan password" required autocomplete="current-password">
+            <button type="button" id="togglePasswordBtn" class="toggle-password" title="Lihat password">
+              <i class="fa-solid fa-eye"></i>
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" id="loginSubmitBtn" class="btn btn-primary btn-block">
+          <span class="btn-text"><i class="fa-solid fa-right-to-bracket"></i> Masuk ke Panel Admin</span>
+          <span class="btn-spinner hidden"><i class="fa-solid fa-spinner fa-spin"></i> Memverifikasi...</span>
+        </button>
+      </form>
+
+      <div class="login-footer">
+        <a href="./" class="back-to-site"><i class="fa-solid fa-arrow-left"></i> Kembali ke Website Utama</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================
+       2. ADMIN DASHBOARD SCREEN
+       ==================================================== -->
+  <div id="dashboardScreen" class="dashboard-layout hidden">
+    
+    <!-- Top Navbar -->
+    <header class="admin-navbar">
+      <div class="nav-brand">
+        <img src="public/images/logo-satria.png" alt="SATRIA Logo" class="nav-logo">
+        <div>
+          <h2 class="brand-title">SATRIA <span>Digital</span></h2>
+          <span class="brand-tagline">Panel Pengelola Direktori Terapis</span>
+        </div>
+      </div>
+
+      <div class="nav-actions">
+        <a href="./" target="_blank" class="btn btn-outline" title="Buka website publik di tab baru">
+          <i class="fa-solid fa-arrow-up-right-from-square"></i> <span class="hide-mobile">Lihat Website</span>
+        </a>
+        <button id="openAddModalBtn" class="btn btn-primary">
+          <i class="fa-solid fa-plus"></i> <span>Tambah Terapis</span>
+        </button>
+        <button id="logoutBtn" class="btn btn-danger-outline" title="Keluar dari panel admin">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> <span class="hide-mobile">Keluar</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Dashboard Content -->
+    <main class="dashboard-main">
+      
+      <!-- Stats Overview -->
+      <section class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon red"><i class="fa-solid fa-user-doctor"></i></div>
+          <div class="stat-info">
+            <span class="stat-label">Total Terapis Terdaftar</span>
+            <strong id="statTotalCount" class="stat-value">-</strong>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon green"><i class="fa-solid fa-map-location-dot"></i></div>
+          <div class="stat-info">
+            <span class="stat-label">Kota / Wilayah</span>
+            <strong id="statCitiesCount" class="stat-value">-</strong>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon gold"><i class="fa-solid fa-hand-holding-heart"></i></div>
+          <div class="stat-info">
+            <span class="stat-label">Kategori Terapi</span>
+            <strong class="stat-value">5 Bidang</strong>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon blue"><i class="fa-solid fa-shield-halved"></i></div>
+          <div class="stat-info">
+            <span class="stat-label">Status Sinkronisasi</span>
+            <strong class="stat-value text-green"><i class="fa-solid fa-circle-check"></i> Real-Time Live</strong>
+          </div>
+        </div>
+      </section>
+
+      <!-- Directory Management Header & Toolbar -->
+      <section class="table-section">
+        <div class="section-toolbar">
+          <div class="toolbar-title">
+            <h3>Daftar Profil Terapis SATRIA</h3>
+            <p>Kelola, tambah, edit profil dan sinkronkan langsung ke website direktori.</p>
+          </div>
+
+          <div class="toolbar-search">
+            <div class="search-input-wrap">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <input type="text" id="searchInput" placeholder="Cari nama tempat, terapis, atau kota...">
+            </div>
+            <button id="refreshBtn" class="btn btn-secondary" title="Segarkan data">
+              <i class="fa-solid fa-rotate"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Therapists Cards / List -->
+        <div id="therapistsList" class="therapists-grid">
+          <!-- Populated by admin.js -->
+        </div>
+
+        <!-- Empty State -->
+        <div id="emptyState" class="empty-state hidden">
+          <div class="empty-icon"><i class="fa-solid fa-user-slash"></i></div>
+          <h4>Belum Ada Data Terapis</h4>
+          <p>Klik tombol di bawah untuk menambahkan profil terapis pertama.</p>
+          <button class="btn btn-primary" onclick="document.getElementById('openAddModalBtn').click()">
+            <i class="fa-solid fa-plus"></i> Tambah Profil Terapis
+          </button>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ====================================================
+       3. ADD / EDIT THERAPIST MODAL
+       ==================================================== -->
+  <div id="therapistModal" class="modal-backdrop hidden">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div>
+          <h3 id="modalTitle">Tambah Profil Terapis Baru</h3>
+          <p class="modal-subtitle">Isi data profil terapis dengan lengkap untuk ditampilkan pada direktori website.</p>
+        </div>
+        <button type="button" class="modal-close" id="closeModalBtn">&times;</button>
+      </div>
+
+      <form id="therapistForm" class="modal-form">
+        <input type="hidden" id="editTherapistId" value="">
+
+        <div class="modal-body">
+          
+          <!-- Section 1: Identitas & Brand -->
+          <div class="form-section-title">
+            <i class="fa-solid fa-id-card"></i> 1. Identitas Brand & Praktisi
+          </div>
+          <div class="form-row">
+            <div class="form-group col-6">
+              <label for="fBrand">Nama Brand / Tempat Terapi <span class="required">*</span></label>
+              <input type="text" id="fBrand" class="form-control" placeholder="Contoh: GRIYA TERAPI SEHAT - MALANG" required>
+            </div>
+            <div class="form-group col-6">
+              <label for="fPractitioner">Nama Terapis / Praktisi <span class="required">*</span></label>
+              <input type="text" id="fPractitioner" class="form-control" placeholder="Contoh: masdim & co" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-6">
+              <label for="fShortCode">Singkatan Brand / Kode <span class="hint">(Opsional)</span></label>
+              <input type="text" id="fShortCode" class="form-control" placeholder="Contoh: GTSM / URC">
+            </div>
+            <div class="form-group col-6">
+              <label for="fAssociation">Asosiasi / Organisasi</label>
+              <input type="text" id="fAssociation" class="form-control" value="SATRIA • Seduluran Terapis Recovery Indonesia">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="fMotto">Motto / Tagline Layanan</label>
+            <input type="text" id="fMotto" class="form-control" placeholder="Contoh: Terapi Holistik Terpadu untuk Kebugaran, Reposisi Sendi & Pemulihan Vitalitas.">
+          </div>
+
+          <div class="form-group">
+            <label for="fOverview">Deskripsi / Profil Singkat Tempat Terapi</label>
+            <textarea id="fOverview" class="form-control" rows="3" placeholder="Jelaskan keunggulan tempat terapi, pengalaman praktisi, dan pendekatan penanganan..."></textarea>
+          </div>
+
+          <!-- Section 2: Foto Profil -->
+          <div class="form-section-title">
+            <i class="fa-solid fa-image"></i> 2. Foto Profil / Avatar
+          </div>
+          
+          <div class="photo-upload-zone">
+            <div class="avatar-preview-box">
+              <img id="avatarPreview" src="public/images/logo-satria.png" alt="Preview Foto">
+            </div>
+            <div class="upload-controls">
+              <label class="btn btn-secondary upload-btn">
+                <i class="fa-solid fa-upload"></i> Unggah Foto dari HP / Laptop
+                <input type="file" id="avatarFileInput" accept="image/*" class="file-input-hidden">
+              </label>
+              <div class="url-input-wrap">
+                <label for="fAvatar">Atau masukkan URL / Path Foto:</label>
+                <input type="text" id="fAvatar" class="form-control" placeholder="public/images/foto-anda.jpg">
+              </div>
+              <small class="text-muted">Mendukung format JPG, PNG, WEBP. Otomatis tersimpan ke server.</small>
+            </div>
+          </div>
+
+          <!-- Section 3: Kontak & Lokasi -->
+          <div class="form-section-title">
+            <i class="fa-solid fa-location-dot"></i> 3. Kontak & Alamat Lengkap
+          </div>
+          <div class="form-row">
+            <div class="form-group col-6">
+              <label for="fPhone">Nomor WhatsApp / HP <span class="required">*</span></label>
+              <input type="text" id="fPhone" class="form-control" placeholder="Contoh: 0819-3184-1593" required>
+            </div>
+            <div class="form-group col-6">
+              <label for="fCity">Kota / Kabupaten <span class="required">*</span></label>
+              <input type="text" id="fCity" class="form-control" placeholder="Contoh: Kota Malang" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-6">
+              <label for="fDistrict">Kecamatan / Kelurahan</label>
+              <input type="text" id="fDistrict" class="form-control" placeholder="Contoh: Sukun">
+            </div>
+            <div class="form-group col-6">
+              <label for="fProvince">Provinsi</label>
+              <input type="text" id="fProvince" class="form-control" placeholder="Contoh: Jawa Timur">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="fAddress">Alamat Lengkap Tempat Praktik <span class="required">*</span></label>
+            <textarea id="fAddress" class="form-control" rows="2" placeholder="Contoh: Jl. S. Supriadi no 81 A, Kelurahan Sukun - Kota Malang" required></textarea>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-6">
+              <label for="fLandmark">Patokan Lokasi (Landmark)</label>
+              <input type="text" id="fLandmark" class="form-control" placeholder="Contoh: Dekat SPBU Sukun / Depan Rumah Sakit">
+            </div>
+            <div class="form-group col-6">
+              <label for="fMapsUrl">Link Google Maps <span class="required">*</span></label>
+              <input type="url" id="fMapsUrl" class="form-control" placeholder="https://maps.app.goo.gl/..." required>
+            </div>
+          </div>
+
+          <!-- Section 4: Biaya & Jam Layanan -->
+          <div class="form-section-title">
+            <i class="fa-solid fa-money-bill-wave"></i> 4. Tarif & Jam Praktik
+          </div>
+          <div class="form-row">
+            <div class="form-group col-6">
+              <label for="fPriceRange">Kisaran Tarif / Biaya Terapi</label>
+              <input type="text" id="fPriceRange" class="form-control" placeholder="Contoh: Mulai 150K / Sesi (150K, 250K, 400K, 600K)">
+            </div>
+            <div class="form-group col-6">
+              <label for="fPriceNote">Catatan Tarif / Paket</label>
+              <input type="text" id="fPriceNote" class="form-control" placeholder="Contoh: Tersedia harga paket perawatan dan pemulihan">
+            </div>
+          </div>
+
+          <!-- Section 5: Kategori & Keluhan -->
+          <div class="form-section-title">
+            <i class="fa-solid fa-stethoscope"></i> 5. Kategori Terapi & Keluhan yang Ditangani
+          </div>
+
+          <div class="form-group">
+            <label>Kategori Terapi (Pilih yang sesuai):</label>
+            <div class="checkbox-grid">
+              <label class="custom-checkbox">
+                <input type="checkbox" name="categories" value="kretek" checked>
+                <span>Pijat Kretek / Reposisi Tulang Sendi</span>
+              </label>
+              <label class="custom-checkbox">
+                <input type="checkbox" name="categories" value="sport-massage" checked>
+                <span>Sport Massage / Cedera Olahraga</span>
+              </label>
+              <label class="custom-checkbox">
+                <input type="checkbox" name="categories" value="akupunktur">
+                <span>Akupunktur / Dry Needle</span>
+              </label>
+              <label class="custom-checkbox">
+                <input type="checkbox" name="categories" value="bekam">
+                <span>Bekam / Cupping Therapy</span>
+              </label>
+              <label class="custom-checkbox">
+                <input type="checkbox" name="categories" value="bio-elektrik">
+                <span>Bio Elektrik / Tens Elektrik / Topung</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="fComplaints">Daftar Keluhan yang Ditangani (Pisahkan dengan koma):</label>
+            <textarea id="fComplaints" class="form-control" rows="3" placeholder="Contoh: Postural Problem, Gangguan Persendian, Cidera Olahraga/Menahun, Migrain Vertigo, Low Back Pain, Skoliosis Lordosis Kiposis, Kebas Kesemutan, Kaku Leher - Bahu - Punggung, Aslam, Saraf Terjepit, Pasca Stroke"></textarea>
+            <small class="text-muted">Keluhan ini akan otomatis dikonversi menjadi tag pencarian pada modal detail terapis.</small>
+          </div>
+
+          <!-- Section 6: Layanan Rinci (Dynamic Services) -->
+          <div class="form-section-title">
+            <div class="d-flex justify-between align-center">
+              <span><i class="fa-solid fa-list-check"></i> 6. Layanan Rinci / Menu Terapi</span>
+              <button type="button" id="addServiceItemBtn" class="btn btn-sm btn-secondary">
+                <i class="fa-solid fa-plus"></i> Tambah Layanan
+              </button>
+            </div>
+          </div>
+          
+          <div id="servicesContainer" class="services-dynamic-list">
+            <!-- Populated dynamically -->
+          </div>
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="cancelModalBtn">Batal</button>
+          <button type="submit" id="saveTherapistBtn" class="btn btn-primary">
+            <span class="btn-text"><i class="fa-solid fa-floppy-disk"></i> Simpan Profil Terapis</span>
+            <span class="btn-spinner hidden"><i class="fa-solid fa-spinner fa-spin"></i> Menyimpan...</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ====================================================
+       4. DELETE CONFIRMATION MODAL
+       ==================================================== -->
+  <div id="deleteModal" class="modal-backdrop hidden">
+    <div class="modal-dialog modal-dialog-sm">
+      <div class="modal-header">
+        <h3 class="text-danger"><i class="fa-solid fa-triangle-exclamation"></i> Konfirmasi Hapus</h3>
+        <button type="button" class="modal-close" id="closeDeleteModalBtn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>Apakah Anda yakin ingin menghapus profil terapis ini dari direktori?</p>
+        <p><strong id="deleteTargetName">-</strong></p>
+        <p class="text-muted" style="font-size: 0.85rem;">Tindakan ini akan langsung menghapus profil dari data website direktori SATRIA.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="cancelDeleteBtn">Batal</button>
+        <button type="button" class="btn btn-danger" id="confirmDeleteBtn">
+          <i class="fa-solid fa-trash"></i> Ya, Hapus Terapis
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- Admin JavaScript -->
+  <script src="js/admin.js?v=20260908b"></script>
+</body>
+</html>
