@@ -9,7 +9,7 @@ const THERAPISTS_DATA = [
     brand: "Ungaran Reposisi Center",
     shortCode: "URC",
     practitioner: "Master Terapis URC",
-    association: "Perkumpulan Terapis Manual & Asosiasi Reposisi Tulang Sendi (UAR)",
+    association: "SATRIA • Komunitas Seduluran Terapis Recovery Indonesia & Asosiasi Reposisi Tulang Sendi (UAR)",
     city: "Ungaran / Kab. Semarang",
     district: "Ungaran Timur (Beji)",
     province: "Jawa Tengah",
