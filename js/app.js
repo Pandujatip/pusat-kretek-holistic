@@ -291,8 +291,25 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Initial render
+  // Initial render with bundled data
   filterAndRender();
+
+  // Live fetch from Admin API to guarantee real-time updates
+  const apiEndpoint = window.location.pathname.startsWith('/pusat-kretek-holistic')
+    ? '/pusat-kretek-holistic/api/therapists'
+    : '/api/therapists';
+
+  fetch(`${apiEndpoint}?v=${Date.now()}`)
+    .then(res => res.ok ? res.json() : null)
+    .then(data => {
+      if (Array.isArray(data) && data.length > 0) {
+        window.THERAPISTS_DATA = data;
+        filterAndRender();
+      }
+    })
+    .catch(() => {
+      // Graceful fallback to bundled js/therapists.js
+    });
 
   console.log('✅ SentraKretek.id marketplace directory initialized successfully.');
 });
