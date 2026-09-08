@@ -141,6 +141,89 @@ const THERAPISTS_DATA = [
       "GERD & Asam Lambung Menahun"
     ],
     operatingHours: "Buka Setiap Hari (Sesuai Reservasi Janji Temu WhatsApp)"
+  },
+  {
+    id: "gts-malang",
+    brand: "GRIYA TERAPI SEHAT - MALANG",
+    shortCode: "GTS",
+    practitioner: "masdim & co",
+    association: "SATRIA • Seduluran Terapis Recovery Indonesia",
+    city: "Malang / Kota Malang",
+    district: "Sukun (Jl. S. Supriadi)",
+    province: "Jawa Timur",
+    regionKey: "malang",
+    categoryTags: ["kretek", "sport-massage", "akupunktur", "bekam", "bio-elektrik"],
+    avatar: "public/images/terapis-masdim-malang.png",
+    actionPhotos: [
+      {
+        url: "public/images/terapis-masdim-malang.png",
+        caption: "Masdim & Co - Praktisi Utama Griya Terapi Sehat Malang (Anggota Resmi SATRIA)"
+      }
+    ],
+    priceRange: "Mulai dari Rp 150.000 / sesi",
+    priceNote: "Tersedia pilihan 150K, 250K, 400K, 600K serta paket perawatan dan pemulihan",
+    address: "Jl. S. Supriadi No. 81 A, Kelurahan Sukun, Kota Malang, Jawa Timur",
+    landmark: "Jl. S. Supriadi No. 81 A, Sukun - Kota Malang",
+    phone: "0819-3184-1593",
+    waNumber: "6281931841593",
+    mapsUrl: "https://maps.app.goo.gl/4ztAHajYVocZM5GW8?g_st=awb",
+    motto: "Pemulihan Postural, Gangguan Sendi, dan Cedera Menahun dengan Manual Terapi, Akupunktur & Pijat Holistik Berkelanjutan.",
+    overview: "Griya Terapi Sehat Malang yang dipimpin oleh Masdim & Co adalah sentra pemulihan holistik dan terapi recovery terstandarisasi di Kota Malang. Menghadirkan kombinasi manual terapi reposisi tulang otot sendi, penanganan cedera olahraga, dry needle, topung, moxa, cupping hingga stimulasi elektrik untuk mengembalikan postur dan kebugaran tubuh optimal.",
+    primarySpecialties: [
+      "Manual Terapi Reposisi Tulang & Sendi",
+      "Recovery Sport Injury",
+      "Dry Needle & Akupunktur",
+      "Pijat Holistik & Cupping/Bekam",
+      "Tens Elektrik & Topung"
+    ],
+    servicesDetailed: [
+      {
+        title: "🦴 Manual Terapi Reposisi Tulang Otot Sendi",
+        desc: "Koreksi ketidakseimbangan postur (postural problem), reposisi panggul, dan penyelarasan ruas tulang belakang untuk membebaskan saraf terjepit."
+      },
+      {
+        title: "🏃 Recovery Sport Injury",
+        desc: "Penanganan komprehensif cedera olahraga baru maupun cedera menahun untuk mengembalikan fleksibilitas dan fungsi gerak tubuh."
+      },
+      {
+        title: "🌿 Pijat Holistik & Topung (Totok Punggung)",
+        desc: "Terapi pelepasan ketegangan otot fasia dan totok punggung untuk melancarkan sirkulasi energi dan darah ke seluruh organ."
+      },
+      {
+        title: "⚡ Tens Elektrik Stimulator",
+        desc: "Stimulasi impuls listrik terapeutik untuk meredakan nyeri saraf, kekakuan otot, dan mempercepat regenerasi jaringan yang cedera."
+      },
+      {
+        title: "🥢 Scrapping / Guasha Medis",
+        desc: "Teknik kerokan medis guasha untuk memecah perlengketan fasia, melancarkan sirkulasi mikro, dan meredakan kaku leher-bahu-punggung."
+      },
+      {
+        title: "🩸 Cupping / Bekam Medis Steril",
+        desc: "Metode kop cupping steril untuk detoksifikasi, menurunkan inflamasi otot, dan meredakan pegal linu berat."
+      },
+      {
+        title: "🎯 Dry Needle & Moxa",
+        desc: "Terapi jarum kering (trigger point release) dipadukan dengan penghangatan moxa untuk mengurai simpul otot kaku kronis."
+      },
+      {
+        title: "🌱 Konsultasi Herbal Alami",
+        desc: "Pendampingan nutrisi dan ramuan herbal alami untuk pemulihan asam lambung (aslam) dan daya tahan tubuh."
+      }
+    ],
+    complaintsDetailed: [
+      "Postural Problem (Postur Bungkuk / Miring)",
+      "Gangguan Persendian (Sendi Bahu, Panggul, Lutut)",
+      "Cidera Olahraga & Cedera Menahun",
+      "Migrain & Sakit Kepala Vertigo",
+      "Low Back Pain (Nyeri Pinggang Bawah)",
+      "Skoliosis, Lordosis & Kiposis",
+      "Kebas & Kesemutan Anggota Gerak",
+      "Kaku Leher, Bahu & Punggung",
+      "Asam Lambung (Aslam / Gerd)",
+      "Saraf Terjepit (HNP)",
+      "Rehabilitasi Pasca Stroke"
+    ],
+    operatingHours: "Senin – Sabtu (Dengan Reservasi WhatsApp Terlebih Dahulu)"
   }
 ];
 
