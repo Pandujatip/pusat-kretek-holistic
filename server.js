@@ -61,8 +61,80 @@ function readTherapists() {
 }
 
 // Helper: Save Therapists Data & Sync js/therapists.js
+
+// Helper: Normalize & Fill Defaults for Therapist Data
+function normalizeTherapist(item) {
+  const catNames = {
+    'kretek': 'Pijat Kretek / Reposisi Tulang Sendi',
+    'sport-massage': 'Sport Massage & Recovery',
+    'akupunktur': 'Akupunktur Medis',
+    'bekam': 'Bekam Higienis',
+    'bio-elektrik': 'Bio Elektrik'
+  };
+
+  item.shortCode = item.shortCode || (item.brand ? item.brand.replace(/[^A-Za-z0-9]/g, '').slice(0, 4).toUpperCase() : 'STR') || 'STR';
+  item.regionKey = item.regionKey || (item.city ? item.city.toLowerCase().replace(/[^a-z0-9]/g, '') : 'nusantara');
+  item.priceRange = item.priceRange || 'Hubungi Terapis';
+  item.priceNote = item.priceNote || 'Sesuai jenis layanan & kondisi pasien';
+  item.operatingHours = item.operatingHours || 'Sesuai Reservasi Janji Temu WhatsApp';
+  item.landmark = item.landmark || item.address || '-';
+  item.district = item.district || item.city || '-';
+  item.province = item.province || '-';
+  item.motto = item.motto || 'Seduluran dalam kebersamaan, profesional dalam pelayanan.';
+  item.overview = item.overview || `${item.brand} melayani penanganan keluhan tulang, sendi, dan pemulihan holistik terpercaya anggota SATRIA.`;
+  item.categoryTags = Array.isArray(item.categoryTags) && item.categoryTags.length > 0 ? item.categoryTags : ['kretek'];
+
+  // Phone / WA
+  if (item.phone && !item.waNumber) {
+    item.waNumber = item.phone.replace(/[^0-9]/g, '');
+    if (item.waNumber.startsWith('0')) {
+      item.waNumber = '62' + item.waNumber.slice(1);
+    }
+  }
+
+  // Primary Specialties
+  if (!Array.isArray(item.primarySpecialties) || item.primarySpecialties.length === 0) {
+    if (Array.isArray(item.servicesDetailed) && item.servicesDetailed.length > 0) {
+      item.primarySpecialties = item.servicesDetailed
+        .map(s => (s.title || '').replace(/^[^\w\s]+/, '').trim())
+        .filter(Boolean)
+        .slice(0, 4);
+    } else {
+      item.primarySpecialties = item.categoryTags.map(c => catNames[c] || c).slice(0, 4);
+    }
+  }
+
+  // Complaints
+  if (!Array.isArray(item.complaintsDetailed) || item.complaintsDetailed.length === 0) {
+    if (Array.isArray(item.complaintsTreated) && item.complaintsTreated.length > 0) {
+      item.complaintsDetailed = item.complaintsTreated;
+    } else {
+      item.complaintsDetailed = ['Postural Problem', 'Gangguan Persendian', 'Syaraf Terjepit', 'Kaku Otot'];
+    }
+  }
+  item.complaintsTreated = item.complaintsDetailed;
+
+  // Services
+  if (!Array.isArray(item.servicesDetailed) || item.servicesDetailed.length === 0) {
+    item.servicesDetailed = [
+      { title: '🦴 Manual Terapi Reposisi Tulang Otot Sendi', desc: 'Penyesuaian biomekanika sendi dan pelepasan syaraf terjepit.' },
+      { title: '🏃 Recovery Sport Injury & Pijat Holistik', desc: 'Penanganan cedera olahraga dan relaksasi ketegangan otot dalam.' }
+    ];
+  }
+
+  // Action Photos
+  if (!Array.isArray(item.actionPhotos) || item.actionPhotos.length === 0) {
+    item.actionPhotos = [
+      { url: item.avatar || 'public/images/logo-satria.png', caption: `${item.brand} - ${item.practitioner}` }
+    ];
+  }
+
+  return item;
+}
+
 function saveTherapists(data) {
   try {
+    data = data.map(normalizeTherapist);
     // 1. Save data/therapists.json
     fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2), 'utf-8');
 

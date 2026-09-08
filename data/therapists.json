@@ -79,7 +79,15 @@
       "Cedera Olahraga & Pemulihan Fisik Pasca Cedera",
       "Pergeseran Panggul & Ruas Tulang Belakang"
     ],
-    "operatingHours": "Senin – Minggu (08.00 – 20.00 WIB) • Dengan Reservasi Terlebih Dahulu"
+    "operatingHours": "Senin – Minggu (08.00 – 20.00 WIB) • Dengan Reservasi Terlebih Dahulu",
+    "complaintsTreated": [
+      "Syaraf Kejepit (HNP Pinggang & Leher)",
+      "Kekakuan Otot Berat & Spasme Punggung",
+      "Keterbatasan Rentang Gerak Sendi",
+      "Masalah Sendi Bahu (Frozen Shoulder), Lutut & Engkel",
+      "Cedera Olahraga & Pemulihan Fisik Pasca Cedera",
+      "Pergeseran Panggul & Ruas Tulang Belakang"
+    ]
   },
   {
     "id": "andi-bogor",
@@ -145,7 +153,15 @@
       "Vertigo, Migrain & Sakit Kepala Berat",
       "GERD & Asam Lambung Menahun"
     ],
-    "operatingHours": "Buka Setiap Hari (Sesuai Reservasi Janji Temu WhatsApp)"
+    "operatingHours": "Buka Setiap Hari (Sesuai Reservasi Janji Temu WhatsApp)",
+    "complaintsTreated": [
+      "Pemulihan Pasca Stroke (Anggota Gerak Kaku/Lemas)",
+      "Syaraf Kejepit (HNP Servikal & Lumbal)",
+      "Keluhan Tulang & Postur Miring (Skoliosis/Panggul)",
+      "Keluhan Otot dan Sendi Kaku",
+      "Vertigo, Migrain & Sakit Kepala Berat",
+      "GERD & Asam Lambung Menahun"
+    ]
   },
   {
     "id": "gts-malang",
@@ -234,6 +250,78 @@
       "Saraf Terjepit (HNP)",
       "Rehabilitasi Pasca Stroke"
     ],
-    "operatingHours": "Senin – Sabtu (Dengan Reservasi WhatsApp Terlebih Dahulu)"
+    "operatingHours": "Senin – Sabtu (Dengan Reservasi WhatsApp Terlebih Dahulu)",
+    "complaintsTreated": [
+      "Postural Problem (Postur Bungkuk / Miring)",
+      "Gangguan Persendian (Sendi Bahu, Panggul, Lutut)",
+      "Cidera Olahraga & Cedera Menahun",
+      "Migrain & Sakit Kepala Vertigo",
+      "Low Back Pain (Nyeri Pinggang Bawah)",
+      "Skoliosis, Lordosis & Kiposis",
+      "Kebas & Kesemutan Anggota Gerak",
+      "Kaku Leher, Bahu & Punggung",
+      "Asam Lambung (Aslam / Gerd)",
+      "Saraf Terjepit (HNP)",
+      "Rehabilitasi Pasca Stroke"
+    ]
+  },
+  {
+    "brand": "Griya sehat tuban",
+    "practitioner": "Mas Pand",
+    "shortCode": "GRIY",
+    "association": "SATRIA • Seduluran Terapis Recovery Indonesia",
+    "motto": "Seduluran dalam kebersamaan, profesional dalam pelayanan.",
+    "overview": "Griya sehat tuban melayani penanganan keluhan tulang, sendi, dan pemulihan holistik terpercaya anggota SATRIA.",
+    "avatar": "public/images/chatgpt-image-aug-30-2026-09-43-19-pm-pn-1788858489599.png",
+    "phone": "081235811235",
+    "city": "Kota Tuban",
+    "district": "Kota Tuban",
+    "province": "-",
+    "address": "Jalan wahidin",
+    "landmark": "Jalan wahidin",
+    "mapsUrl": "https://www.google.com/maps/place/Kerek,+Tuban+Regency,+East+Java/@-6.8835659,111.7635493,12z/data=!3m1!4b1!4m6!3m5!1s0x2e770a9bd712889b:0x4027a76e35324a0!8m2!3d-6.8925109!4d111.8857828!16s%2Fg%2F1232c4dk?entry=ttu&g_ep=EgoyMDI2MDkwMi4wIKXMDSoASAFQAw%3D%3D",
+    "priceRange": "Hubungi Terapis",
+    "priceNote": "Sesuai jenis layanan & kondisi pasien",
+    "categoryTags": [
+      "kretek",
+      "sport-massage",
+      "bio-elektrik"
+    ],
+    "complaintsTreated": [
+      "Postural Problem",
+      "Gangguan Persendian",
+      "Syaraf Terjepit",
+      "Kaku Otot"
+    ],
+    "servicesDetailed": [
+      {
+        "title": "🦴 Manual Terapi Reposisi Tulang Otot Sendi",
+        "desc": "Penyesuaian biomekanika sendi dan pelepasan syaraf terjepit."
+      },
+      {
+        "title": "🏃 Recovery Sport Injury & Pijat Holistik",
+        "desc": "Penanganan cedera olahraga dan relaksasi ketegangan otot dalam."
+      }
+    ],
+    "id": "griya-sehat-tuban",
+    "waNumber": "6281235811235",
+    "regionKey": "kotatuban",
+    "operatingHours": "Sesuai Reservasi Janji Temu WhatsApp",
+    "primarySpecialties": [
+      "Manual Terapi Reposisi Tulang Otot Sendi",
+      "Recovery Sport Injury & Pijat Holistik"
+    ],
+    "complaintsDetailed": [
+      "Postural Problem",
+      "Gangguan Persendian",
+      "Syaraf Terjepit",
+      "Kaku Otot"
+    ],
+    "actionPhotos": [
+      {
+        "url": "public/images/chatgpt-image-aug-30-2026-09-43-19-pm-pn-1788858489599.png",
+        "caption": "Griya sehat tuban - Mas Pand"
+      }
+    ]
   }
 ]

@@ -1,7 +1,8 @@
 /**
  * SentraKretek.id - Application Engine
  * Manages compact therapist directory, category filtering, city chips,
- * instant live search, and full detailed modal rendering on click.
+ * instant live search, full detailed modal rendering on click,
+ * and robust real-time synchronization from Admin Panel / REST API.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -10,35 +11,155 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnClearSearch = document.getElementById('btnClearSearch');
   const resultsCount = document.getElementById('resultsCount');
   const catButtons = document.querySelectorAll('.cat-col-btn');
-  const cityChips = document.querySelectorAll('.city-chip');
+  const cityChipsWrap = document.querySelector('.city-chips-wrap');
 
   let activeCategory = 'all';
   let activeCity = 'all';
   let searchQuery = '';
 
   // -------------------------------------------------------------
-  // 1. Filter & Render Directory Cards
+  // 0. Data Normalizer (Defensive Guarantee)
+  // -------------------------------------------------------------
+  const catNames = {
+    'kretek': 'Pijat Kretek / Reposisi',
+    'sport-massage': 'Sport Massage & Recovery',
+    'akupunktur': 'Akupunktur Medis',
+    'bekam': 'Bekam Medis Higienis',
+    'bio-elektrik': 'Bio Elektrik'
+  };
+
+  function normalizeTherapist(raw) {
+    if (!raw) return null;
+    const t = { ...raw };
+
+    t.id = t.id || 'terapis-' + Date.now();
+    t.brand = t.brand || 'Tempat Terapi SATRIA';
+    t.practitioner = t.practitioner || 'Praktisi SATRIA';
+    t.city = t.city || 'Indonesia';
+    t.district = t.district || '';
+    t.province = t.province || '';
+    t.address = t.address || t.city;
+    t.landmark = t.landmark || t.address || '-';
+    t.phone = t.phone || '-';
+    t.waNumber = t.waNumber || (t.phone ? t.phone.replace(/[^0-9]/g, '') : '');
+    if (t.waNumber.startsWith('0')) {
+      t.waNumber = '62' + t.waNumber.slice(1);
+    }
+    t.mapsUrl = t.mapsUrl || `https://maps.google.com/?q=${encodeURIComponent(t.brand + ' ' + t.city)}`;
+    t.avatar = t.avatar || 'public/images/logo-satria.png';
+    t.association = t.association || 'SATRIA • Seduluran Terapis Recovery Indonesia';
+    t.shortCode = t.shortCode || (t.brand ? t.brand.replace(/[^A-Za-z0-9]/g, '').slice(0, 4).toUpperCase() : 'STR') || 'STR';
+    t.regionKey = (t.regionKey || t.city || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+
+    t.priceRange = t.priceRange || 'Hubungi Terapis';
+    t.priceNote = t.priceNote || 'Sesuai konsultasi awal & kondisi pasien';
+    t.operatingHours = t.operatingHours || 'Sesuai Reservasi Janji Temu WhatsApp';
+    t.motto = t.motto || 'Seduluran dalam kebersamaan, profesional dalam pelayanan.';
+    t.overview = t.overview || `${t.brand} melayani penanganan keluhan tulang, sendi, dan pemulihan holistik terpercaya anggota SATRIA.`;
+
+    t.categoryTags = Array.isArray(t.categoryTags) && t.categoryTags.length > 0 ? t.categoryTags : ['kretek'];
+
+    // Primary Specialties
+    if (!Array.isArray(t.primarySpecialties) || t.primarySpecialties.length === 0) {
+      if (Array.isArray(t.servicesDetailed) && t.servicesDetailed.length > 0) {
+        t.primarySpecialties = t.servicesDetailed
+          .map(s => (s.title || '').replace(/^[^\w\s]+/, '').trim())
+          .filter(Boolean)
+          .slice(0, 4);
+      } else {
+        t.primarySpecialties = t.categoryTags.map(c => catNames[c] || c).slice(0, 4);
+      }
+    }
+    if (t.primarySpecialties.length === 0) {
+      t.primarySpecialties = ['Terapi Reposisi', 'Pijat Holistik'];
+    }
+
+    // Complaints Detailed
+    if (!Array.isArray(t.complaintsDetailed) || t.complaintsDetailed.length === 0) {
+      if (Array.isArray(t.complaintsTreated) && t.complaintsTreated.length > 0) {
+        t.complaintsDetailed = t.complaintsTreated;
+      } else {
+        t.complaintsDetailed = ['Postural Problem', 'Gangguan Persendian', 'Syaraf Terjepit', 'Kaku Otot'];
+      }
+    }
+
+    // Services Detailed
+    if (!Array.isArray(t.servicesDetailed) || t.servicesDetailed.length === 0) {
+      t.servicesDetailed = [
+        { title: '🦴 Manual Terapi Reposisi Tulang Otot Sendi', desc: 'Penyesuaian biomekanika sendi dan pelepasan syaraf terjepit.' },
+        { title: '🏃 Recovery Sport Injury & Pijat Holistik', desc: 'Penanganan cedera olahraga dan relaksasi ketegangan otot dalam.' }
+      ];
+    }
+
+    // Action Photos
+    if (!Array.isArray(t.actionPhotos) || t.actionPhotos.length === 0) {
+      t.actionPhotos = [
+        { url: t.avatar, caption: `${t.brand} - ${t.practitioner}` }
+      ];
+    }
+
+    return t;
+  }
+
+  function getCleanTherapists() {
+    if (typeof THERAPISTS_DATA === 'undefined' || !Array.isArray(THERAPISTS_DATA)) return [];
+    return THERAPISTS_DATA.map(normalizeTherapist).filter(Boolean);
+  }
+
+  // -------------------------------------------------------------
+  // 1. Dynamic City Chips Registration
+  // -------------------------------------------------------------
+  function syncCityChips() {
+    if (!cityChipsWrap) return;
+    const knownKeys = new Set();
+    cityChipsWrap.querySelectorAll('.city-chip').forEach(c => {
+      knownKeys.add(c.getAttribute('data-city'));
+    });
+
+    const cleanList = getCleanTherapists();
+    cleanList.forEach(t => {
+      if (!t.regionKey || knownKeys.has(t.regionKey)) return;
+      knownKeys.add(t.regionKey);
+
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'city-chip';
+      btn.setAttribute('data-city', t.regionKey);
+      btn.textContent = t.city;
+      btn.addEventListener('click', () => {
+        cityChipsWrap.querySelectorAll('.city-chip').forEach(c => c.classList.remove('active'));
+        btn.classList.add('active');
+        activeCity = t.regionKey;
+        filterAndRender();
+      });
+      cityChipsWrap.appendChild(btn);
+    });
+  }
+
+  // -------------------------------------------------------------
+  // 2. Filter & Render Directory Cards
   // -------------------------------------------------------------
   function filterAndRender() {
-    if (!therapistsGrid || typeof THERAPISTS_DATA === 'undefined') return;
+    if (!therapistsGrid) return;
 
+    const all = getCleanTherapists();
     const query = searchQuery.toLowerCase().trim();
 
-    const filtered = THERAPISTS_DATA.filter(t => {
+    const filtered = all.filter(t => {
       // 1. Category filter
-      const matchCategory = activeCategory === 'all' || 
-        t.categoryTags.includes(activeCategory);
+      const matchCategory = activeCategory === 'all' || t.categoryTags.includes(activeCategory);
 
       // 2. City filter
       const matchCity = activeCity === 'all' || 
-        t.regionKey === activeCity;
+        t.regionKey === activeCity ||
+        (t.city && t.city.toLowerCase().includes(activeCity));
 
       // 3. Search query filter
       const matchSearch = !query || 
-        t.brand.toLowerCase().includes(query) ||
-        t.practitioner.toLowerCase().includes(query) ||
-        t.city.toLowerCase().includes(query) ||
-        t.district.toLowerCase().includes(query) ||
+        (t.brand && t.brand.toLowerCase().includes(query)) ||
+        (t.practitioner && t.practitioner.toLowerCase().includes(query)) ||
+        (t.city && t.city.toLowerCase().includes(query)) ||
+        (t.district && t.district.toLowerCase().includes(query)) ||
         t.primarySpecialties.some(s => s.toLowerCase().includes(query)) ||
         t.complaintsDetailed.some(c => c.toLowerCase().includes(query));
 
@@ -66,7 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <!-- Top Bar: Avatar & Brand Info -->
         <div class="c-card-top" onclick="window.showTherapistDetail('${t.id}')" role="button" tabindex="0" title="Klik untuk lihat profil lengkap">
           <div class="c-card-avatar">
-            <img src="${t.avatar}" alt="${t.brand}" loading="lazy">
+            <img src="${t.avatar}" alt="${t.brand}" loading="lazy" onerror="this.src='public/images/logo-satria.png'">
             <span class="c-avatar-city">📍 ${t.city}</span>
           </div>
           <div class="c-card-meta">
@@ -102,7 +223,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <button type="button" class="btn btn-outline btn-sm btn-view-profile" onclick="window.showTherapistDetail('${t.id}')">
             👁️ Profil & Galeri
           </button>
-          <a href="https://wa.me/${t.waNumber}?text=Halo%20${encodeURIComponent(t.brand)}%20(${encodeURIComponent(t.practitioner)})%2C%20saya%20menemukan%20profil%20Anda%20di%20SentraKretek.id%20dan%20ingin%20konsultasi%20jadwal%20terapi." target="_blank" rel="noopener" class="btn btn-primary btn-sm btn-wa-direct">
+          <a href="https://wa.me/${t.waNumber}?text=Halo%20${encodeURIComponent(t.brand)}%20(${encodeURIComponent(t.practitioner)})%2C%20saya%20menemukan%20profil%20Anda%20di%20direktori%20SATRIA%20dan%20ingin%20konsultasi%20jadwal%20terapi." target="_blank" rel="noopener" class="btn btn-primary btn-sm btn-wa-direct">
             <svg class="icon-sm" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2z"/></svg>
             Chat WhatsApp
           </a>
@@ -112,7 +233,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // -------------------------------------------------------------
-  // 2. Category & City Filters Interaction
+  // 3. Category & City Filters Interaction
   // -------------------------------------------------------------
   catButtons.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -123,14 +244,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  cityChips.forEach(chip => {
-    chip.addEventListener('click', () => {
-      cityChips.forEach(c => c.classList.remove('active'));
-      chip.classList.add('active');
-      activeCity = chip.getAttribute('data-city') || 'all';
-      filterAndRender();
+  if (cityChipsWrap) {
+    cityChipsWrap.querySelectorAll('.city-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        cityChipsWrap.querySelectorAll('.city-chip').forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        activeCity = chip.getAttribute('data-city') || 'all';
+        filterAndRender();
+      });
     });
-  });
+  }
 
   // Search input
   if (searchInput) {
@@ -145,8 +268,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (btnClearSearch) {
     btnClearSearch.addEventListener('click', () => {
+      if (searchInput) searchInput.value = '';
       searchQuery = '';
-      searchInput.value = '';
       btnClearSearch.style.display = 'none';
       filterAndRender();
     });
@@ -164,25 +287,29 @@ document.addEventListener('DOMContentLoaded', () => {
       else b.classList.remove('active');
     });
 
-    cityChips.forEach(c => {
-      if (c.getAttribute('data-city') === 'all') c.classList.add('active');
-      else c.classList.remove('active');
-    });
+    if (cityChipsWrap) {
+      cityChipsWrap.querySelectorAll('.city-chip').forEach(c => {
+        if (c.getAttribute('data-city') === 'all') c.classList.add('active');
+        else c.classList.remove('active');
+      });
+    }
 
     filterAndRender();
   };
 
   // -------------------------------------------------------------
-  // 3. Deep-Dive Detailed Modal (Muncul saat diklik)
+  // 4. Deep-Dive Detailed Modal (Muncul saat diklik)
   // -------------------------------------------------------------
   const modalDialog = document.getElementById('therapistModal');
   const btnCloseModal = document.getElementById('btnCloseModal');
   const btnCloseModalBottom = document.getElementById('btnCloseModalBottom');
 
   window.showTherapistDetail = function(therapistId) {
-    if (!modalDialog || typeof THERAPISTS_DATA === 'undefined') return;
+    if (!modalDialog) return;
 
-    const t = THERAPISTS_DATA.find(item => item.id === therapistId) || THERAPISTS_DATA[0];
+    const all = getCleanTherapists();
+    const t = all.find(item => item.id === therapistId) || all[0];
+    if (!t) return;
 
     // Populate Top Header
     document.getElementById('modalAvatar').src = t.avatar;
@@ -196,7 +323,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('modalHours').textContent = `⏱️ ${t.operatingHours}`;
 
     // WhatsApp Links
-    const waText = `Halo ${encodeURIComponent(t.brand)} (${encodeURIComponent(t.practitioner)}), saya melihat profil lengkap Anda di SentraKretek.id dan ingin konsultasi serta reservasi jadwal terapi.`;
+    const waText = `Halo ${encodeURIComponent(t.brand)} (${encodeURIComponent(t.practitioner)}), saya melihat profil lengkap Anda di direktori SATRIA dan ingin konsultasi serta reservasi jadwal terapi.`;
     const waUrl = `https://wa.me/${t.waNumber}?text=${waText}`;
 
     document.getElementById('modalWaPrimary').href = waUrl;
@@ -215,9 +342,9 @@ document.addEventListener('DOMContentLoaded', () => {
         galleryGrid.innerHTML = t.actionPhotos.map(p => `
           <div class="gallery-photo-card">
             <div class="photo-aspect">
-              <img src="${p.url}" alt="${p.caption}" loading="lazy">
+              <img src="${p.url}" alt="${p.caption || t.brand}" loading="lazy" onerror="this.src='public/images/logo-satria.png'">
             </div>
-            <p class="photo-caption">${p.caption}</p>
+            <p class="photo-caption">${p.caption || t.brand}</p>
           </div>
         `).join('');
       } else {
@@ -291,7 +418,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Initial render with bundled data
+  // -------------------------------------------------------------
+  // 5. Initial Render & Live API Sync
+  // -------------------------------------------------------------
+  syncCityChips();
   filterAndRender();
 
   // Live fetch from Admin API to guarantee real-time updates
@@ -302,14 +432,16 @@ document.addEventListener('DOMContentLoaded', () => {
   fetch(`${apiEndpoint}?v=${Date.now()}`)
     .then(res => res.ok ? res.json() : null)
     .then(data => {
-      if (Array.isArray(data) && data.length > 0) {
-        window.THERAPISTS_DATA = data;
+      const items = Array.isArray(data) ? data : (data && Array.isArray(data.therapists) ? data.therapists : null);
+      if (items && items.length > 0) {
+        window.THERAPISTS_DATA = items;
+        syncCityChips();
         filterAndRender();
       }
     })
-    .catch(() => {
-      // Graceful fallback to bundled js/therapists.js
+    .catch(err => {
+      console.warn('Live API sync fallback to bundled data:', err);
     });
 
-  console.log('✅ SentraKretek.id marketplace directory initialized successfully.');
+  console.log('✅ SATRIA Digital directory engine initialized successfully.');
 });

@@ -1,77 +1,82 @@
 /**
  * Database Terapis & Sentra Reposisi Nusantara
- * Model data skalabel untuk 50+ praktisi di berbagai kota.
+ * Sinkronisasi otomatis dari Admin Panel SATRIA Digital
  */
 
 const THERAPISTS_DATA = [
   {
-    id: "urc-ungaran",
-    brand: "Ungaran Reposisi Center",
-    shortCode: "URC",
-    practitioner: "Master Terapis URC",
-    association: "SATRIA • Komunitas Seduluran Terapis Recovery Indonesia & Asosiasi Reposisi Tulang Sendi (UAR)",
-    city: "Ungaran / Kab. Semarang",
-    district: "Ungaran Timur (Beji)",
-    province: "Jawa Tengah",
-    regionKey: "semarang",
-    categoryTags: ["kretek", "sport-massage", "akupunktur", "bekam"],
-    avatar: "public/images/urc-terapi-1.jpg",
-    actionPhotos: [
+    "id": "urc-ungaran",
+    "brand": "Ungaran Reposisi Center",
+    "shortCode": "URC",
+    "practitioner": "Master Terapis URC",
+    "association": "SATRIA • Komunitas Seduluran Terapis Recovery Indonesia & Asosiasi Reposisi Tulang Sendi (UAR)",
+    "city": "Ungaran / Kab. Semarang",
+    "district": "Ungaran Timur (Beji)",
+    "province": "Jawa Tengah",
+    "regionKey": "semarang",
+    "categoryTags": [
+      "kretek",
+      "sport-massage",
+      "akupunktur",
+      "bekam"
+    ],
+    "avatar": "public/images/urc-terapi-1.jpg",
+    "actionPhotos": [
       {
-        url: "public/images/urc-terapi-1.jpg",
-        caption: "Manipulasi Sendi Kaki & Panggul (Koreksi Dislokasi & Pelvic Alignment)"
+        "url": "public/images/urc-terapi-1.jpg",
+        "caption": "Manipulasi Sendi Kaki & Panggul (Koreksi Dislokasi & Pelvic Alignment)"
       },
       {
-        url: "public/images/urc-terapi-3.jpg",
-        caption: "Penyelarasan Ruas Tulang Belakang (Lumbal Adjustment untuk Syaraf Kejepit)"
+        "url": "public/images/urc-terapi-3.jpg",
+        "caption": "Penyelarasan Ruas Tulang Belakang (Lumbal Adjustment untuk Syaraf Kejepit)"
       },
       {
-        url: "public/images/urc-terapi-4.png",
-        caption: "Smart Massage & Pemulihan Ketegangan Otot Torakal (UAR Reposisi)"
+        "url": "public/images/urc-terapi-4.png",
+        "caption": "Smart Massage & Pemulihan Ketegangan Otot Torakal (UAR Reposisi)"
       },
       {
-        url: "public/images/urc-terapi-2.jpg",
-        caption: "Pemeriksaan Biomekanika Tubuh & Evaluasi Rentang Gerak"
+        "url": "public/images/urc-terapi-2.jpg",
+        "caption": "Pemeriksaan Biomekanika Tubuh & Evaluasi Rentang Gerak"
       }
     ],
-    priceRange: "Rp 150.000 – Rp 250.000",
-    priceNote: "Sesuai kombinasi tindakan (Reposisi + Massage / Akupunktur / Bekam)",
-    address: "Serasi VIII/D 89, Pondok Babadan Baru, Beji, Ungaran Timur, Kab. Semarang, Jawa Tengah",
-    landmark: "Pondok Babadan Baru Blok D No. 89",
-    phone: "0821-3892-1941",
-    waNumber: "6282138921941",
-    mapsUrl: "https://maps.app.goo.gl/UqWcTa5V3NcM3pCq6",
-    motto: "Manipulasi Manual Reposisi Tulang Sendi untuk Pemulihan Ketegangan Otot, Pergeseran Ruas Tulang & Penekanan Syaraf.",
-    overview: "Ungaran Reposisi Center (URC) adalah sentra rujukan terapi manual biomekanika sendi dan pemulihan muskuloskeletal terstandarisasi di kawasan Ungaran dan Semarang. Menggabungkan teknik reposisi sendi presisi, sport massage intensif untuk atlet dan masyarakat, akupunktur medis & estetika, serta bekam higienis.",
-    primarySpecialties: [
+    "priceRange": "Rp 150.000 – Rp 250.000",
+    "priceNote": "Sesuai kombinasi tindakan (Reposisi + Massage / Akupunktur / Bekam)",
+    "address": "Serasi VIII/D 89, Pondok Babadan Baru, Beji, Ungaran Timur, Kab. Semarang, Jawa Tengah",
+    "landmark": "Pondok Babadan Baru Blok D No. 89",
+    "phone": "0821-3892-1941",
+    "waNumber": "6282138921941",
+    "mapsUrl": "https://maps.app.goo.gl/UqWcTa5V3NcM3pCq6",
+    "motto": "Manipulasi Manual Reposisi Tulang Sendi untuk Pemulihan Ketegangan Otot, Pergeseran Ruas Tulang & Penekanan Syaraf.",
+    "overview": "Ungaran Reposisi Center (URC) adalah sentra rujukan terapi manual biomekanika sendi dan pemulihan muskuloskeletal terstandarisasi di kawasan Ungaran dan Semarang. Menggabungkan teknik reposisi sendi presisi, sport massage intensif untuk atlet dan masyarakat, akupunktur medis & estetika, serta bekam higienis.",
+    "primarySpecialties": [
       "Reposisi Tulang & Sendi",
       "Sport Massage (Deep Tissue)",
       "Akupunktur Medis & Estetika",
       "Bekam Medis"
     ],
-    servicesDetailed: [
+    "servicesDetailed": [
       {
-        title: "🦴 Reposisi Tulang & Sendi (Spine & Joint Realignment)",
-        desc: "Koreksi dislokasi mikro pada sendi bahu, panggul, lutut, dan ruas tulang belakang yang menyebabkan penekanan syaraf."
+        "title": "🦴 Reposisi Tulang & Sendi (Spine & Joint Realignment)",
+        "desc": "Koreksi dislokasi mikro pada sendi bahu, panggul, lutut, dan ruas tulang belakang yang menyebabkan penekanan syaraf."
       },
       {
-        title: "🏃 Sport Massage & Smart Massage",
-        desc: "Pelepasan ketegangan otot dalam (deep tissue release) untuk mengatasi spasme, perlengketan fasia, dan cedera otot akibat aktivitas berat atau olahraga."
+        "title": "🏃 Sport Massage & Smart Massage",
+        "desc": "Pelepasan ketegangan otot dalam (deep tissue release) untuk mengatasi spasme, perlengketan fasia, dan cedera otot akibat aktivitas berat atau olahraga."
       },
       {
-        title: "✨ Akupunktur Estetika Wajah & Tubuh",
-        desc: "Stimulasi titik meridian untuk meremajakan sel kulit, melancarkan aliran energi, dan mengencangkan otot wajah secara alami."
+        "title": "✨ Akupunktur Estetika Wajah & Tubuh",
+        "desc": "Stimulasi titik meridian untuk meremajakan sel kulit, melancarkan aliran energi, dan mengencangkan otot wajah secara alami."
       },
       {
-        title: "🎯 Akupunktur Medis",
-        desc: "Penanganan gangguan saraf, sakit kepala menahun, peredaran darah tersumbat, dan nyeri sendi menggunakan jarum steril sekali pakai."
+        "title": "🎯 Akupunktur Medis",
+        "desc": "Penanganan gangguan saraf, sakit kepala menahun, peredaran darah tersumbat, dan nyeri sendi menggunakan jarum steril sekali pakai."
       },
       {
-        title: "🩸 Bekam Medis Steril",
-        desc: "Pengangkatan darah kotor, asam urat, dan toksin metabolisme tubuh dengan peralatan higienis sekali pakai."
+        "title": "🩸 Bekam Medis Steril",
+        "desc": "Pengangkatan darah kotor, asam urat, dan toksin metabolisme tubuh dengan peralatan higienis sekali pakai."
       }
     ],
-    complaintsDetailed: [
+    "complaintsDetailed": [
       "Syaraf Kejepit (HNP Pinggang & Leher)",
       "Kekakuan Otot Berat & Spasme Punggung",
       "Keterbatasan Rentang Gerak Sendi",
@@ -79,60 +84,73 @@ const THERAPISTS_DATA = [
       "Cedera Olahraga & Pemulihan Fisik Pasca Cedera",
       "Pergeseran Panggul & Ruas Tulang Belakang"
     ],
-    operatingHours: "Senin – Minggu (08.00 – 20.00 WIB) • Dengan Reservasi Terlebih Dahulu"
+    "operatingHours": "Senin – Minggu (08.00 – 20.00 WIB) • Dengan Reservasi Terlebih Dahulu",
+    "complaintsTreated": [
+      "Syaraf Kejepit (HNP Pinggang & Leher)",
+      "Kekakuan Otot Berat & Spasme Punggung",
+      "Keterbatasan Rentang Gerak Sendi",
+      "Masalah Sendi Bahu (Frozen Shoulder), Lutut & Engkel",
+      "Cedera Olahraga & Pemulihan Fisik Pasca Cedera",
+      "Pergeseran Panggul & Ruas Tulang Belakang"
+    ]
   },
   {
-    id: "andi-bogor",
-    brand: "Pusat Kretek Holistic",
-    shortCode: "PKH",
-    practitioner: "Pak Andi",
-    association: "SATRIA (Seduluran, Berkarya, Berbagi) & Praktisi Terapi Holistik Terpadu",
-    city: "Bojong Kulur / Kab. Bogor",
-    district: "Gunung Putri (Bojong Kulur)",
-    province: "Jawa Barat",
-    regionKey: "bogor",
-    categoryTags: ["kretek", "bio-elektrik", "akupunktur", "bekam"],
-    avatar: "public/images/owner-andi.png",
-    actionPhotos: [
+    "id": "andi-bogor",
+    "brand": "Pusat Kretek Holistic",
+    "shortCode": "PKH",
+    "practitioner": "Pak Andi",
+    "association": "SATRIA (Seduluran, Berkarya, Berbagi) & Praktisi Terapi Holistik Terpadu",
+    "city": "Bojong Kulur / Kab. Bogor",
+    "district": "Gunung Putri (Bojong Kulur)",
+    "province": "Jawa Barat",
+    "regionKey": "bogor",
+    "categoryTags": [
+      "kretek",
+      "bio-elektrik",
+      "akupunktur",
+      "bekam"
+    ],
+    "avatar": "public/images/owner-andi.png",
+    "actionPhotos": [
       {
-        url: "public/images/owner-andi.png",
-        caption: "Pak Andi - Praktisi Utama Pusat Kretek Holistic Bojong Kulur"
+        "url": "public/images/owner-andi.png",
+        "caption": "Pak Andi - Praktisi Utama Pusat Kretek Holistic Bojong Kulur"
       }
     ],
-    priceRange: "Ramah & Terjangkau",
-    priceNote: "Konsultasi awal & tindakan disesuaikan kondisi pasien",
-    address: "Jalan Puri Delta, RT.2/RW.8, No. 29 Kampung Lembur-BojongKulur (Rumah cat hijau), KAB. BOGOR, GUNUNG PUTRI, JAWA BARAT, ID, 16969",
-    landmark: "Rumah Cat Hijau No. 29 di Kampung Lembur - Bojong Kulur",
-    phone: "0818-1810-0534",
-    waNumber: "6281818100534",
-    mapsUrl: "https://maps.app.goo.gl/LiYd9pJ9hkh8bPaG6",
-    motto: "Seduluran, Berkarya, Berbagi — Memulihkan keselarasan sistem syaraf, otot, dan struktur tulang dengan niat tulus membantu sesama.",
-    overview: "Pusat Kretek Holistic dikelola langsung oleh Pak Andi dengan jam terbang tinggi menangani ratusan pasien muskuloskeletal. Mengutamakan pendekatan holistik 4-in-1 yang menyasar akar masalah, bukan sekadar menghilangkan rasa sakit sementara.",
-    primarySpecialties: [
+    "priceRange": "Ramah & Terjangkau",
+    "priceNote": "Konsultasi awal & tindakan disesuaikan kondisi pasien",
+    "address": "Jalan Puri Delta, RT.2/RW.8, No. 29 Kampung Lembur-BojongKulur (Rumah cat hijau), KAB. BOGOR, GUNUNG PUTRI, JAWA BARAT, ID, 16969",
+    "landmark": "Rumah Cat Hijau No. 29 di Kampung Lembur - Bojong Kulur",
+    "phone": "0818-1810-0534",
+    "waNumber": "6281818100534",
+    "mapsUrl": "https://maps.app.goo.gl/LiYd9pJ9hkh8bPaG6",
+    "motto": "Seduluran, Berkarya, Berbagi — Memulihkan keselarasan sistem syaraf, otot, dan struktur tulang dengan niat tulus membantu sesama.",
+    "overview": "Pusat Kretek Holistic dikelola langsung oleh Pak Andi dengan jam terbang tinggi menangani ratusan pasien muskuloskeletal. Mengutamakan pendekatan holistik 4-in-1 yang menyasar akar masalah, bukan sekadar menghilangkan rasa sakit sementara.",
+    "primarySpecialties": [
       "Pijat Kretek (Bone Setting)",
       "Bio Elektrik Stimulator",
       "Akupunktur Medis",
       "Bekam Medis & Sunnah"
     ],
-    servicesDetailed: [
+    "servicesDetailed": [
       {
-        title: "🦴 Pijat Kretek (Holistic Bone Setting)",
-        desc: "Teknik reposisi struktur tulang belakang dan sendi panggul secara presisi untuk membebaskan jepitan saraf tanpa rasa sakit berlebih."
+        "title": "🦴 Pijat Kretek (Holistic Bone Setting)",
+        "desc": "Teknik reposisi struktur tulang belakang dan sendi panggul secara presisi untuk membebaskan jepitan saraf tanpa rasa sakit berlebih."
       },
       {
-        title: "⚡ Bio Elektrik Stimulator Saraf",
-        desc: "Penyaluran arus mikro biologis untuk mereaktivasi saraf motorik dan sensorik yang melemah atau lumpuh pasca stroke."
+        "title": "⚡ Bio Elektrik Stimulator Saraf",
+        "desc": "Penyaluran arus mikro biologis untuk mereaktivasi saraf motorik dan sensorik yang melemah atau lumpuh pasca stroke."
       },
       {
-        title: "🎯 Akupunktur Medis Meridian",
-        desc: "Penyeimbangan fungsi organ tubuh, mengatasi asam lambung (GERD), melancarkan sirkulasi pembuluh darah otak (vertigo/migrain)."
+        "title": "🎯 Akupunktur Medis Meridian",
+        "desc": "Penyeimbangan fungsi organ tubuh, mengatasi asam lambung (GERD), melancarkan sirkulasi pembuluh darah otak (vertigo/migrain)."
       },
       {
-        title: "🩸 Bekam Medis & Sunnah",
-        desc: "Detoksifikasi darah kotor, asam urat, dan penumpukan racun metabolik dengan standar higienis steril sekali pakai."
+        "title": "🩸 Bekam Medis & Sunnah",
+        "desc": "Detoksifikasi darah kotor, asam urat, dan penumpukan racun metabolik dengan standar higienis steril sekali pakai."
       }
     ],
-    complaintsDetailed: [
+    "complaintsDetailed": [
       "Pemulihan Pasca Stroke (Anggota Gerak Kaku/Lemas)",
       "Syaraf Kejepit (HNP Servikal & Lumbal)",
       "Keluhan Tulang & Postur Miring (Skoliosis/Panggul)",
@@ -140,77 +158,91 @@ const THERAPISTS_DATA = [
       "Vertigo, Migrain & Sakit Kepala Berat",
       "GERD & Asam Lambung Menahun"
     ],
-    operatingHours: "Buka Setiap Hari (Sesuai Reservasi Janji Temu WhatsApp)"
+    "operatingHours": "Buka Setiap Hari (Sesuai Reservasi Janji Temu WhatsApp)",
+    "complaintsTreated": [
+      "Pemulihan Pasca Stroke (Anggota Gerak Kaku/Lemas)",
+      "Syaraf Kejepit (HNP Servikal & Lumbal)",
+      "Keluhan Tulang & Postur Miring (Skoliosis/Panggul)",
+      "Keluhan Otot dan Sendi Kaku",
+      "Vertigo, Migrain & Sakit Kepala Berat",
+      "GERD & Asam Lambung Menahun"
+    ]
   },
   {
-    id: "gts-malang",
-    brand: "GRIYA TERAPI SEHAT - MALANG",
-    shortCode: "GTS",
-    practitioner: "masdim & co",
-    association: "SATRIA • Seduluran Terapis Recovery Indonesia",
-    city: "Malang / Kota Malang",
-    district: "Sukun (Jl. S. Supriadi)",
-    province: "Jawa Timur",
-    regionKey: "malang",
-    categoryTags: ["kretek", "sport-massage", "akupunktur", "bekam", "bio-elektrik"],
-    avatar: "public/images/terapis-masdim-malang.png",
-    actionPhotos: [
+    "id": "gts-malang",
+    "brand": "GRIYA TERAPI SEHAT - MALANG",
+    "shortCode": "GTS",
+    "practitioner": "masdim & co",
+    "association": "SATRIA • Seduluran Terapis Recovery Indonesia",
+    "city": "Malang / Kota Malang",
+    "district": "Sukun (Jl. S. Supriadi)",
+    "province": "Jawa Timur",
+    "regionKey": "malang",
+    "categoryTags": [
+      "kretek",
+      "sport-massage",
+      "akupunktur",
+      "bekam",
+      "bio-elektrik"
+    ],
+    "avatar": "public/images/terapis-masdim-malang.png",
+    "actionPhotos": [
       {
-        url: "public/images/terapis-masdim-malang.png",
-        caption: "Masdim & Co - Praktisi Utama Griya Terapi Sehat Malang (Anggota Resmi SATRIA)"
+        "url": "public/images/terapis-masdim-malang.png",
+        "caption": "Masdim & Co - Praktisi Utama Griya Terapi Sehat Malang (Anggota Resmi SATRIA)"
       }
     ],
-    priceRange: "Mulai dari Rp 150.000 / sesi",
-    priceNote: "Tersedia pilihan 150K, 250K, 400K, 600K serta paket perawatan dan pemulihan",
-    address: "Jl. S. Supriadi No. 81 A, Kelurahan Sukun, Kota Malang, Jawa Timur",
-    landmark: "Jl. S. Supriadi No. 81 A, Sukun - Kota Malang",
-    phone: "0819-3184-1593",
-    waNumber: "6281931841593",
-    mapsUrl: "https://maps.app.goo.gl/4ztAHajYVocZM5GW8?g_st=awb",
-    motto: "Pemulihan Postural, Gangguan Sendi, dan Cedera Menahun dengan Manual Terapi, Akupunktur & Pijat Holistik Berkelanjutan.",
-    overview: "Griya Terapi Sehat Malang yang dipimpin oleh Masdim & Co adalah sentra pemulihan holistik dan terapi recovery terstandarisasi di Kota Malang. Menghadirkan kombinasi manual terapi reposisi tulang otot sendi, penanganan cedera olahraga, dry needle, topung, moxa, cupping hingga stimulasi elektrik untuk mengembalikan postur dan kebugaran tubuh optimal.",
-    primarySpecialties: [
+    "priceRange": "Mulai dari Rp 150.000 / sesi",
+    "priceNote": "Tersedia pilihan 150K, 250K, 400K, 600K serta paket perawatan dan pemulihan",
+    "address": "Jl. S. Supriadi No. 81 A, Kelurahan Sukun, Kota Malang, Jawa Timur",
+    "landmark": "Jl. S. Supriadi No. 81 A, Sukun - Kota Malang",
+    "phone": "0819-3184-1593",
+    "waNumber": "6281931841593",
+    "mapsUrl": "https://maps.app.goo.gl/4ztAHajYVocZM5GW8?g_st=awb",
+    "motto": "Pemulihan Postural, Gangguan Sendi, dan Cedera Menahun dengan Manual Terapi, Akupunktur & Pijat Holistik Berkelanjutan.",
+    "overview": "Griya Terapi Sehat Malang yang dipimpin oleh Masdim & Co adalah sentra pemulihan holistik dan terapi recovery terstandarisasi di Kota Malang. Menghadirkan kombinasi manual terapi reposisi tulang otot sendi, penanganan cedera olahraga, dry needle, topung, moxa, cupping hingga stimulasi elektrik untuk mengembalikan postur dan kebugaran tubuh optimal.",
+    "primarySpecialties": [
       "Manual Terapi Reposisi Tulang & Sendi",
       "Recovery Sport Injury",
       "Dry Needle & Akupunktur",
       "Pijat Holistik & Cupping/Bekam",
       "Tens Elektrik & Topung"
     ],
-    servicesDetailed: [
+    "servicesDetailed": [
       {
-        title: "🦴 Manual Terapi Reposisi Tulang Otot Sendi",
-        desc: "Koreksi ketidakseimbangan postur (postural problem), reposisi panggul, dan penyelarasan ruas tulang belakang untuk membebaskan saraf terjepit."
+        "title": "🦴 Manual Terapi Reposisi Tulang Otot Sendi",
+        "desc": "Koreksi ketidakseimbangan postur (postural problem), reposisi panggul, dan penyelarasan ruas tulang belakang untuk membebaskan saraf terjepit."
       },
       {
-        title: "🏃 Recovery Sport Injury",
-        desc: "Penanganan komprehensif cedera olahraga baru maupun cedera menahun untuk mengembalikan fleksibilitas dan fungsi gerak tubuh."
+        "title": "🏃 Recovery Sport Injury",
+        "desc": "Penanganan komprehensif cedera olahraga baru maupun cedera menahun untuk mengembalikan fleksibilitas dan fungsi gerak tubuh."
       },
       {
-        title: "🌿 Pijat Holistik & Topung (Totok Punggung)",
-        desc: "Terapi pelepasan ketegangan otot fasia dan totok punggung untuk melancarkan sirkulasi energi dan darah ke seluruh organ."
+        "title": "🌿 Pijat Holistik & Topung (Totok Punggung)",
+        "desc": "Terapi pelepasan ketegangan otot fasia dan totok punggung untuk melancarkan sirkulasi energi dan darah ke seluruh organ."
       },
       {
-        title: "⚡ Tens Elektrik Stimulator",
-        desc: "Stimulasi impuls listrik terapeutik untuk meredakan nyeri saraf, kekakuan otot, dan mempercepat regenerasi jaringan yang cedera."
+        "title": "⚡ Tens Elektrik Stimulator",
+        "desc": "Stimulasi impuls listrik terapeutik untuk meredakan nyeri saraf, kekakuan otot, dan mempercepat regenerasi jaringan yang cedera."
       },
       {
-        title: "🥢 Scrapping / Guasha Medis",
-        desc: "Teknik kerokan medis guasha untuk memecah perlengketan fasia, melancarkan sirkulasi mikro, dan meredakan kaku leher-bahu-punggung."
+        "title": "🥢 Scrapping / Guasha Medis",
+        "desc": "Teknik kerokan medis guasha untuk memecah perlengketan fasia, melancarkan sirkulasi mikro, dan meredakan kaku leher-bahu-punggung."
       },
       {
-        title: "🩸 Cupping / Bekam Medis Steril",
-        desc: "Metode kop cupping steril untuk detoksifikasi, menurunkan inflamasi otot, dan meredakan pegal linu berat."
+        "title": "🩸 Cupping / Bekam Medis Steril",
+        "desc": "Metode kop cupping steril untuk detoksifikasi, menurunkan inflamasi otot, dan meredakan pegal linu berat."
       },
       {
-        title: "🎯 Dry Needle & Moxa",
-        desc: "Terapi jarum kering (trigger point release) dipadukan dengan penghangatan moxa untuk mengurai simpul otot kaku kronis."
+        "title": "🎯 Dry Needle & Moxa",
+        "desc": "Terapi jarum kering (trigger point release) dipadukan dengan penghangatan moxa untuk mengurai simpul otot kaku kronis."
       },
       {
-        title: "🌱 Konsultasi Herbal Alami",
-        desc: "Pendampingan nutrisi dan ramuan herbal alami untuk pemulihan asam lambung (aslam) dan daya tahan tubuh."
+        "title": "🌱 Konsultasi Herbal Alami",
+        "desc": "Pendampingan nutrisi dan ramuan herbal alami untuk pemulihan asam lambung (aslam) dan daya tahan tubuh."
       }
     ],
-    complaintsDetailed: [
+    "complaintsDetailed": [
       "Postural Problem (Postur Bungkuk / Miring)",
       "Gangguan Persendian (Sendi Bahu, Panggul, Lutut)",
       "Cidera Olahraga & Cedera Menahun",
@@ -223,7 +255,79 @@ const THERAPISTS_DATA = [
       "Saraf Terjepit (HNP)",
       "Rehabilitasi Pasca Stroke"
     ],
-    operatingHours: "Senin – Sabtu (Dengan Reservasi WhatsApp Terlebih Dahulu)"
+    "operatingHours": "Senin – Sabtu (Dengan Reservasi WhatsApp Terlebih Dahulu)",
+    "complaintsTreated": [
+      "Postural Problem (Postur Bungkuk / Miring)",
+      "Gangguan Persendian (Sendi Bahu, Panggul, Lutut)",
+      "Cidera Olahraga & Cedera Menahun",
+      "Migrain & Sakit Kepala Vertigo",
+      "Low Back Pain (Nyeri Pinggang Bawah)",
+      "Skoliosis, Lordosis & Kiposis",
+      "Kebas & Kesemutan Anggota Gerak",
+      "Kaku Leher, Bahu & Punggung",
+      "Asam Lambung (Aslam / Gerd)",
+      "Saraf Terjepit (HNP)",
+      "Rehabilitasi Pasca Stroke"
+    ]
+  },
+  {
+    "brand": "Griya sehat tuban",
+    "practitioner": "Mas Pand",
+    "shortCode": "GRIY",
+    "association": "SATRIA • Seduluran Terapis Recovery Indonesia",
+    "motto": "Seduluran dalam kebersamaan, profesional dalam pelayanan.",
+    "overview": "Griya sehat tuban melayani penanganan keluhan tulang, sendi, dan pemulihan holistik terpercaya anggota SATRIA.",
+    "avatar": "public/images/chatgpt-image-aug-30-2026-09-43-19-pm-pn-1788858489599.png",
+    "phone": "081235811235",
+    "city": "Kota Tuban",
+    "district": "Kota Tuban",
+    "province": "-",
+    "address": "Jalan wahidin",
+    "landmark": "Jalan wahidin",
+    "mapsUrl": "https://www.google.com/maps/place/Kerek,+Tuban+Regency,+East+Java/@-6.8835659,111.7635493,12z/data=!3m1!4b1!4m6!3m5!1s0x2e770a9bd712889b:0x4027a76e35324a0!8m2!3d-6.8925109!4d111.8857828!16s%2Fg%2F1232c4dk?entry=ttu&g_ep=EgoyMDI2MDkwMi4wIKXMDSoASAFQAw%3D%3D",
+    "priceRange": "Hubungi Terapis",
+    "priceNote": "Sesuai jenis layanan & kondisi pasien",
+    "categoryTags": [
+      "kretek",
+      "sport-massage",
+      "bio-elektrik"
+    ],
+    "complaintsTreated": [
+      "Postural Problem",
+      "Gangguan Persendian",
+      "Syaraf Terjepit",
+      "Kaku Otot"
+    ],
+    "servicesDetailed": [
+      {
+        "title": "🦴 Manual Terapi Reposisi Tulang Otot Sendi",
+        "desc": "Penyesuaian biomekanika sendi dan pelepasan syaraf terjepit."
+      },
+      {
+        "title": "🏃 Recovery Sport Injury & Pijat Holistik",
+        "desc": "Penanganan cedera olahraga dan relaksasi ketegangan otot dalam."
+      }
+    ],
+    "id": "griya-sehat-tuban",
+    "waNumber": "6281235811235",
+    "regionKey": "kotatuban",
+    "operatingHours": "Sesuai Reservasi Janji Temu WhatsApp",
+    "primarySpecialties": [
+      "Manual Terapi Reposisi Tulang Otot Sendi",
+      "Recovery Sport Injury & Pijat Holistik"
+    ],
+    "complaintsDetailed": [
+      "Postural Problem",
+      "Gangguan Persendian",
+      "Syaraf Terjepit",
+      "Kaku Otot"
+    ],
+    "actionPhotos": [
+      {
+        "url": "public/images/chatgpt-image-aug-30-2026-09-43-19-pm-pn-1788858489599.png",
+        "caption": "Griya sehat tuban - Mas Pand"
+      }
+    ]
   }
 ];
 
